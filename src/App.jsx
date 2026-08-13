@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { servicesData as defaultServicesData } from './data/servicesData';
+// CMS Disabled - commented out servicesData import
+// import { servicesData as defaultServicesData } from './data/servicesData';
 import {
   FiGrid,
   FiInbox,
@@ -82,17 +83,17 @@ const INITIAL_CONTACTS = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'contacts' | 'editor'
-  
+
   // Contacts State
   const [contacts, setContacts] = useState([]);
   const [contactFilter, setContactFilter] = useState('all');
   const [contactSearch, setContactSearch] = useState('');
   const [selectedContact, setSelectedContact] = useState(null);
 
-  // Services Accordion State
-  const [services, setServices] = useState(defaultServicesData);
-  const [selectedSlug, setSelectedSlug] = useState('business-registration');
-  const [editorSection, setEditorSection] = useState('about'); // 'about' | 'servicesWeProvide' | 'onClickServices' | 'terms'
+  // CMS Disabled - Services Accordion State
+  // const [services, setServices] = useState(defaultServicesData);
+  // const [selectedSlug, setSelectedSlug] = useState('business-registration');
+  // const [editorSection, setEditorSection] = useState('about'); // 'about' | 'servicesWeProvide' | 'onClickServices' | 'terms'
 
   // Toast State
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
@@ -113,7 +114,8 @@ export default function App() {
       setContacts(INITIAL_CONTACTS);
     }
 
-    // Load Services
+    // CMS Disabled - Load Services from LocalStorage
+    /*
     try {
       const savedServices = localStorage.getItem('corporate_hub_services_data');
       if (savedServices) {
@@ -122,6 +124,7 @@ export default function App() {
     } catch (e) {
       console.error("Error loading services data from localStorage", e);
     }
+    */
   }, []);
 
   const triggerToast = (message, type = 'success') => {
@@ -152,7 +155,8 @@ export default function App() {
     }
   };
 
-  // Service Accordion Data Handlers
+  /*
+  // CMS Disabled - Service Accordion Data Handlers
   const activeService = services.find(s => s.slug === selectedSlug) || services[0];
 
   const updateActiveServiceField = (path, value) => {
@@ -174,7 +178,6 @@ export default function App() {
     setServices(updatedServices);
   };
 
-  // Service Provide Card Edit
   const handleProvideCardChange = (idx, field, val) => {
     const updatedServices = services.map(s => {
       if (s.slug !== selectedSlug) return s;
@@ -210,7 +213,6 @@ export default function App() {
     triggerToast("Service provision item removed.", "info");
   };
 
-  // Sub-Services (OnClickServices) Edit
   const handleSubServiceChange = (subId, field, val) => {
     const updatedServices = services.map(s => {
       if (s.slug !== selectedSlug) return s;
@@ -293,7 +295,6 @@ export default function App() {
     triggerToast("Sub-service card removed.", "info");
   };
 
-  // Terms and Conditions Edit
   const handleTermChange = (idx, val) => {
     const updatedServices = services.map(s => {
       if (s.slug !== selectedSlug) return s;
@@ -324,7 +325,6 @@ export default function App() {
     setServices(updatedServices);
   };
 
-  // Save Services to LocalStorage
   const handleSaveServices = () => {
     try {
       localStorage.setItem('corporate_hub_services_data', JSON.stringify(services));
@@ -342,6 +342,7 @@ export default function App() {
       triggerToast("Services data restored to factory defaults.", "info");
     }
   };
+  */
 
   // Filtered Contacts
   const filteredContacts = contacts.filter(c => {
@@ -372,9 +373,9 @@ export default function App() {
       {/* Admin Sidebar */}
       <aside className="admin-sidebar">
         <div className="brand-header">
-          <span className="brand-icon">🏛️</span>
+          <img src="/logo.png" alt="Corporate Hub Logo" className="brand-logo" />
           <div className="brand-titles">
-            <h2>Corporate Hub</h2>
+            <h2>CorporateHub</h2>
             <span className="brand-badge">ADMIN PANEL</span>
           </div>
         </div>
@@ -386,7 +387,7 @@ export default function App() {
           >
             <FiGrid /> Dashboard Overview
           </button>
-          
+
           <button
             className={`nav-btn ${activeTab === 'contacts' ? 'active' : ''}`}
             onClick={() => setActiveTab('contacts')}
@@ -395,12 +396,14 @@ export default function App() {
             {newCount > 0 && <span className="unread-badge">{newCount}</span>}
           </button>
 
+          {/* CMS Disabled - Service Accordion Editor Nav Button
           <button
             className={`nav-btn ${activeTab === 'editor' ? 'active' : ''}`}
             onClick={() => setActiveTab('editor')}
           >
             <FiEdit3 /> Service Accordion Editor
           </button>
+          */}
         </nav>
 
         <div className="sidebar-footer">
@@ -408,7 +411,7 @@ export default function App() {
             <span className="pulse-dot"></span>
             <span>Live Sync Active</span>
           </div>
-          <p>© 2026 AntiLabs Hub</p>
+          <p>© 2026 CorporateHub</p>
         </div>
       </aside>
 
@@ -420,16 +423,17 @@ export default function App() {
             <h1 className="page-title">
               {activeTab === 'dashboard' && 'Dashboard Overview'}
               {activeTab === 'contacts' && 'Incoming Contact Inquiries'}
-              {activeTab === 'editor' && 'Service Accordion Data Manager'}
+              {/* {activeTab === 'editor' && 'Service Accordion Data Manager'} */}
             </h1>
             <p className="page-subtitle">
-              {activeTab === 'dashboard' && 'Monitor real-time client inquiries and service accordion configurations'}
+              {activeTab === 'dashboard' && 'Monitor real-time client inquiries and contact status'}
               {activeTab === 'contacts' && 'Watch and manage incoming customer messages submitted from the contact page'}
-              {activeTab === 'editor' && 'Live edit content, registration steps, and requirements on ServiceAccordion'}
+              {/* {activeTab === 'editor' && 'Live edit content, registration steps, and requirements on ServiceAccordion'} */}
             </p>
           </div>
 
           <div className="topbar-right">
+            {/* CMS Disabled - Topbar Save/Reset Actions
             {activeTab === 'editor' && (
               <div className="action-button-group">
                 <button className="reset-btn" onClick={handleResetServices}>
@@ -440,6 +444,7 @@ export default function App() {
                 </button>
               </div>
             )}
+            */}
           </div>
         </header>
 
@@ -478,6 +483,7 @@ export default function App() {
                 </div>
               </div>
 
+              {/* CMS Disabled - Active Service Categories Stat Card
               <div className="stat-card">
                 <div className="stat-icon services-icon">
                   <FiLayers />
@@ -487,6 +493,7 @@ export default function App() {
                   <span className="stat-value">{services.length}</span>
                 </div>
               </div>
+              */}
             </div>
 
             {/* Quick Recent Submissions & Service Overview */}
@@ -530,6 +537,7 @@ export default function App() {
               </div>
 
               {/* Service Categories Overview */}
+              {/* CMS Disabled - Configured Accordion Categories Card
               <div className="dash-section-card">
                 <div className="section-card-header">
                   <h3>Configured Accordion Categories</h3>
@@ -557,6 +565,7 @@ export default function App() {
                   ))}
                 </div>
               </div>
+              */}
             </div>
           </div>
         )}
@@ -716,7 +725,7 @@ export default function App() {
                     <div className="modal-message-box">
                       <label><FiFileText /> Inquiry Subject</label>
                       <h4 className="modal-subject-text">{selectedContact.subject}</h4>
-                      
+
                       <label style={{ marginTop: '14px', display: 'block' }}>Message Body</label>
                       <p className="modal-message-body">{selectedContact.message}</p>
                     </div>
@@ -736,323 +745,13 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 3: SERVICE ACCORDION DATA MANAGER */}
+        {/* CMS Disabled - TAB 3: SERVICE ACCORDION DATA MANAGER
         {activeTab === 'editor' && (
           <div className="editor-view">
-            {/* Category Selector Bar */}
-            <div className="category-select-bar">
-              <label>Select Category to Edit:</label>
-              <div className="category-pills-list">
-                {services.map(s => (
-                  <button
-                    key={s.slug}
-                    className={`category-pill ${selectedSlug === s.slug ? 'active' : ''}`}
-                    onClick={() => setSelectedSlug(s.slug)}
-                  >
-                    {s.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Service Editor Layout */}
-            <div className="editor-card">
-              {/* Section Sub-Tabs */}
-              <div className="editor-nav-tabs">
-                <button
-                  className={`editor-tab ${editorSection === 'about' ? 'active' : ''}`}
-                  onClick={() => setEditorSection('about')}
-                >
-                  Section 1: About Business
-                </button>
-                <button
-                  className={`editor-tab ${editorSection === 'servicesWeProvide' ? 'active' : ''}`}
-                  onClick={() => setEditorSection('servicesWeProvide')}
-                >
-                  Section 2: Services We Provide
-                </button>
-                <button
-                  className={`editor-tab ${editorSection === 'onClickServices' ? 'active' : ''}`}
-                  onClick={() => setEditorSection('onClickServices')}
-                >
-                  Section 3: OnClick Sub-Accordions ({activeService.accordionData.onClickServices.subServices.length})
-                </button>
-                <button
-                  className={`editor-tab ${editorSection === 'terms' ? 'active' : ''}`}
-                  onClick={() => setEditorSection('terms')}
-                >
-                  Section 4: Terms & Conditions
-                </button>
-              </div>
-
-              {/* Section Editor Body */}
-              <div className="editor-form-body">
-                {/* 1. ABOUT SECTION */}
-                {editorSection === 'about' && (
-                  <div className="form-section">
-                    <div className="form-group">
-                      <label>Page Title</label>
-                      <input
-                        type="text"
-                        value={activeService.title}
-                        onChange={(e) => updateActiveServiceField('title', e.target.value)}
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Short SEO Description</label>
-                      <input
-                        type="text"
-                        value={activeService.shortDescription}
-                        onChange={(e) => updateActiveServiceField('shortDescription', e.target.value)}
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Section 1 Title</label>
-                      <input
-                        type="text"
-                        value={activeService.accordionData.about.title}
-                        onChange={(e) => updateActiveServiceField('about.title', e.target.value)}
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>Section 1 Detailed Content</label>
-                      <textarea
-                        rows="8"
-                        value={activeService.accordionData.about.content}
-                        onChange={(e) => updateActiveServiceField('about.content', e.target.value)}
-                      ></textarea>
-                    </div>
-                  </div>
-                )}
-
-                {/* 2. SERVICES WE PROVIDE SECTION */}
-                {editorSection === 'servicesWeProvide' && (
-                  <div className="form-section">
-                    <div className="form-group">
-                      <label>Section 2 Title</label>
-                      <input
-                        type="text"
-                        value={activeService.accordionData.servicesWeProvide.title}
-                        onChange={(e) => updateActiveServiceField('servicesWeProvide.title', e.target.value)}
-                      />
-                    </div>
-
-                    <div className="cards-edit-header">
-                      <h4>Offerings Cards ({activeService.accordionData.servicesWeProvide.items.length})</h4>
-                      <button className="add-btn" onClick={handleAddProvideCard}>
-                        <FiPlus /> Add Offering Card
-                      </button>
-                    </div>
-
-                    <div className="cards-grid-editor">
-                      {activeService.accordionData.servicesWeProvide.items.map((card, cIdx) => (
-                        <div key={cIdx} className="card-editor-box">
-                          <div className="box-top">
-                            <span>Offering #{cIdx + 1}</span>
-                            <button
-                              className="delete-icon-btn"
-                              onClick={() => handleDeleteProvideCard(cIdx)}
-                            >
-                              <FiTrash2 />
-                            </button>
-                          </div>
-                          <div className="form-group">
-                            <label>Service Name</label>
-                            <input
-                              type="text"
-                              value={card.name}
-                              onChange={(e) => handleProvideCardChange(cIdx, 'name', e.target.value)}
-                            />
-                          </div>
-                          <div className="form-group">
-                            <label>Description</label>
-                            <textarea
-                              rows="3"
-                              value={card.desc}
-                              onChange={(e) => handleProvideCardChange(cIdx, 'desc', e.target.value)}
-                            ></textarea>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* 3. ONCLICK SUB-SERVICES ACCORDION SECTION */}
-                {editorSection === 'onClickServices' && (
-                  <div className="form-section">
-                    <div className="form-group">
-                      <label>Section 3 Accordion Group Title</label>
-                      <input
-                        type="text"
-                        value={activeService.accordionData.onClickServices.title}
-                        onChange={(e) => updateActiveServiceField('onClickServices.title', e.target.value)}
-                      />
-                    </div>
-
-                    <div className="cards-edit-header">
-                      <h4>Sub-Services Accordions ({activeService.accordionData.onClickServices.subServices.length})</h4>
-                      <button className="add-btn" onClick={handleAddSubService}>
-                        <FiPlus /> Add Sub-Service Accordion Card
-                      </button>
-                    </div>
-
-                    <div className="sub-services-accordion-list">
-                      {activeService.accordionData.onClickServices.subServices.map((sub, sIdx) => (
-                        <div key={sub.id} className="sub-editor-card">
-                          <div className="sub-editor-header">
-                            <div className="sub-header-title-flex">
-                              <span className="sub-num-badge">#{sIdx + 1}</span>
-                              <input
-                                type="text"
-                                className="sub-name-input"
-                                value={sub.name}
-                                onChange={(e) => handleSubServiceChange(sub.id, 'name', e.target.value)}
-                              />
-                            </div>
-                            <button
-                              className="delete-icon-btn"
-                              onClick={() => handleDeleteSubService(sub.id)}
-                            >
-                              <FiTrash2 /> Delete Card
-                            </button>
-                          </div>
-
-                          <div className="sub-editor-fields-grid">
-                            <div className="form-group">
-                              <label>Tagline</label>
-                              <input
-                                type="text"
-                                value={sub.tagline}
-                                onChange={(e) => handleSubServiceChange(sub.id, 'tagline', e.target.value)}
-                              />
-                            </div>
-
-                            <div className="form-group">
-                              <label>Turnaround Time</label>
-                              <input
-                                type="text"
-                                value={sub.turnaround}
-                                onChange={(e) => handleSubServiceChange(sub.id, 'turnaround', e.target.value)}
-                              />
-                            </div>
-                          </div>
-
-                          {/* Process Steps */}
-                          <div className="nested-list-section">
-                            <div className="nested-header">
-                              <h5>Registration Process Steps</h5>
-                              <button
-                                className="small-add-btn"
-                                onClick={() => handleAddSubServiceArrayItem(sub.id, 'process')}
-                              >
-                                <FiPlus /> Add Step
-                              </button>
-                            </div>
-
-                            <div className="nested-inputs-list">
-                              {sub.process.map((step, pIdx) => (
-                                <div key={pIdx} className="nested-input-row">
-                                  <span className="step-badge">{pIdx + 1}</span>
-                                  <input
-                                    type="text"
-                                    value={step}
-                                    onChange={(e) => handleSubServiceListArrayChange(sub.id, 'process', pIdx, e.target.value)}
-                                  />
-                                  <button
-                                    className="delete-icon-btn"
-                                    onClick={() => handleDeleteSubServiceArrayItem(sub.id, 'process', pIdx)}
-                                  >
-                                    <FiTrash2 />
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Documents Needed */}
-                          <div className="nested-list-section">
-                            <div className="nested-header">
-                              <h5>Documents Required</h5>
-                              <button
-                                className="small-add-btn"
-                                onClick={() => handleAddSubServiceArrayItem(sub.id, 'documentsNeeded')}
-                              >
-                                <FiPlus /> Add Document
-                              </button>
-                            </div>
-
-                            <div className="nested-inputs-list">
-                              {sub.documentsNeeded.map((doc, dIdx) => (
-                                <div key={dIdx} className="nested-input-row">
-                                  <span className="doc-bullet">•</span>
-                                  <input
-                                    type="text"
-                                    value={doc}
-                                    onChange={(e) => handleSubServiceListArrayChange(sub.id, 'documentsNeeded', dIdx, e.target.value)}
-                                  />
-                                  <button
-                                    className="delete-icon-btn"
-                                    onClick={() => handleDeleteSubServiceArrayItem(sub.id, 'documentsNeeded', dIdx)}
-                                  >
-                                    <FiTrash2 />
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* 4. TERMS AND CONDITIONS SECTION */}
-                {editorSection === 'terms' && (
-                  <div className="form-section">
-                    <div className="form-group">
-                      <label>Section 4 Title</label>
-                      <input
-                        type="text"
-                        value={activeService.accordionData.termsAndConditions.title}
-                        onChange={(e) => updateActiveServiceField('termsAndConditions.title', e.target.value)}
-                      />
-                    </div>
-
-                    <div className="cards-edit-header">
-                      <h4>Terms & Policy Items</h4>
-                      <button className="add-btn" onClick={handleAddTerm}>
-                        <FiPlus /> Add Policy Item
-                      </button>
-                    </div>
-
-                    <div className="terms-editor-list">
-                      {activeService.accordionData.termsAndConditions.items.map((term, tIdx) => (
-                        <div key={tIdx} className="term-input-row">
-                          <span className="term-num">{tIdx + 1}.</span>
-                          <textarea
-                            rows="2"
-                            value={term}
-                            onChange={(e) => handleTermChange(tIdx, e.target.value)}
-                          ></textarea>
-                          <button
-                            className="delete-icon-btn"
-                            onClick={() => handleDeleteTerm(tIdx)}
-                          >
-                            <FiTrash2 />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+            ...
           </div>
         )}
+        */}
       </main>
     </div>
   );

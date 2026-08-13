@@ -100,6 +100,13 @@ body {
   font-size: 1.8rem;
 }
 
+.brand-logo {
+  height: 38px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+}
+
 .brand-titles h2 {
   font-size: 1.15rem;
   font-weight: 700;
