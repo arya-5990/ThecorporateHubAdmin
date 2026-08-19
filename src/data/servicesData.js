@@ -10,6 +10,7 @@ export const servicesData = [
         title: "About Business Registration",
         content: `Business registration is the fundamental legal step required to formalize your business structure in accordance with statutory regulations. Incorporating your business grants it a separate legal entity status, protects personal assets through limited liability, and unlocks access to corporate banking, investor capital, and government schemes.
 
+        
 Whether you are launching a startup, transforming a partnership, or establishing an international subsidiary, registering your entity ensures complete legal compliance and credibility in the market.`
       },
       servicesWeProvide: {
