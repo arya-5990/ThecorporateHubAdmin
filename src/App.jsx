@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { supabase } from './supabaseClient';
+import { servicesData as defaultServicesData } from './data/servicesData';
+import { supabase } from './supabase';
+import LoginPage from './LoginPage';
 import {
   FiGrid,
   FiInbox,
@@ -15,9 +17,17 @@ import {
   FiPhone,
   FiMail,
   FiUser,
-  FiAlertCircle,
+  FiUsers,
+  FiLayers,
+  FiFileText,
+  FiCheck,
   FiArrowRight,
-  FiCheck
+  FiChevronRight,
+  FiSliders,
+  FiAlertCircle,
+  FiCalendar,
+  FiHash,
+  FiLogOut
 } from 'react-icons/fi';
 
 // Fallback Initial Mock Contacts if database is empty/offline
@@ -47,8 +57,12 @@ const INITIAL_CONTACTS = [
 ];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'contacts' | 'users'
+  // Auth State
+  const [session, setSession] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
+  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard' | 'contacts' | 'users' | 'editor'
+  
   // Contacts State
   const [contacts, setContacts] = useState([]);
   const [contactFilter, setContactFilter] = useState('all');
@@ -56,41 +70,95 @@ export default function App() {
   const [selectedContact, setSelectedContact] = useState(null);
   const [loadingContacts, setLoadingContacts] = useState(true);
 
-  // Users State (public.profiles)
+  // Users State
   const [users, setUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState(false);
   const [userSearch, setUserSearch] = useState('');
-  const [loadingUsers, setLoadingUsers] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  // Services Accordion State
+  const [services, setServices] = useState(defaultServicesData);
+  const [selectedSlug, setSelectedSlug] = useState('business-registration');
+  const [editorSection, setEditorSection] = useState('about'); // 'about' | 'servicesWeProvide' | 'onClickServices' | 'terms'
 
   // Toast State
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
-  const triggerToast = (message, type = 'success') => {
-    setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3500);
-  };
+  // Auth Check on Mount
+  useEffect(() => {
+    // Check current session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setAuthLoading(false);
+    });
 
-  // Fetch Contacts from Supabase
-  const fetchContacts = async () => {
-    try {
-      setLoadingContacts(true);
-      const { data, error } = await supabase
-        .from('contact_submissions')
-        .select('*')
-        .order('date', { ascending: false });
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
 
-      if (error) {
-        console.error('Error fetching contact submissions from Supabase:', error);
-        const saved = localStorage.getItem('corporate_hub_contact_submissions');
-        setContacts(saved ? JSON.parse(saved) : INITIAL_CONTACTS);
-      } else if (data) {
-        setContacts(data);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Load Contacts & Services from LocalStorage
+  useEffect(() => {
+    // Only fetch data when authenticated
+    if (!session) return;
+
+    // Load Contacts from Supabase
+    const fetchContacts = async () => {
+      try {
+        if (!import.meta.env.VITE_SUPABASE_URL) {
+          console.warn("Supabase not configured, using mock data");
+          setContacts(INITIAL_CONTACTS);
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from('contact_submissions')
+          .select('*')
+          .order('date', { ascending: false });
+
+        if (error) throw error;
+        
+        // If DB is empty, maybe fallback to initial or just use empty
+        if (data && data.length > 0) {
+          setContacts(data);
+        } else {
+          setContacts([]);
+        }
+      } catch (e) {
+        console.error("Error loading contacts from Supabase", e);
+        setContacts(INITIAL_CONTACTS);
       }
-    } catch (e) {
-      console.error("Error connecting to Supabase contact_submissions", e);
-    } finally {
-      setLoadingContacts(false);
-    }
-  };
+    };
+    fetchContacts();
+
+    // Load Registered Users from Supabase profiles table
+    const fetchUsers = async () => {
+      setUsersLoading(true);
+      try {
+        if (!import.meta.env.VITE_SUPABASE_URL) {
+          console.warn("Supabase not configured, skipping user fetch");
+          setUsersLoading(false);
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .order('email', { ascending: true });
+
+        if (error) throw error;
+        setUsers(data || []);
+      } catch (e) {
+        console.error("Error loading users from Supabase", e);
+        setUsers([]);
+      } finally {
+        setUsersLoading(false);
+      }
+    };
+    fetchUsers();
 
   // Fetch Registered Users from Supabase (public.profiles)
   const fetchUsers = async () => {
@@ -110,57 +178,101 @@ export default function App() {
     } finally {
       setLoadingUsers(false);
     }
+  }, [session]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
   };
 
-  // Initial Load & Realtime Subscriptions
-  useEffect(() => {
-    fetchContacts();
-    fetchUsers();
+  // Show loading while checking auth
+  if (authLoading) {
+    return (
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #0b172a 0%, #193563 100%)',
+        color: '#ffffff',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🏛️</div>
+          <div style={{
+            width: '32px',
+            height: '32px',
+            border: '3px solid rgba(255,255,255,0.2)',
+            borderTopColor: '#ff6000',
+            borderRadius: '50%',
+            animation: 'spin 0.7s linear infinite',
+            margin: '0 auto'
+          }} />
+        </div>
+      </div>
+    );
+  }
 
-    // Subscribe to Realtime Contact Submissions
-    const contactsChannel = supabase
-      .channel('realtime_contacts_admin_v2')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'contact_submissions' },
-        (payload) => {
-          fetchContacts();
-          if (payload.eventType === 'INSERT') {
-            triggerToast(`🔔 New submission received from ${payload.new.fullName || 'a client'}!`, 'info');
-          }
-        }
-      )
-      .subscribe();
+  // Show Login Page if not authenticated
+  if (!session) {
+    return <LoginPage onLoginSuccess={(s) => setSession(s)} />;
+  }
 
-    // Subscribe to Realtime Registered User Profiles
-    const profilesChannel = supabase
-      .channel('realtime_profiles_admin_v2')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'profiles' },
-        (payload) => {
-          fetchUsers();
-          if (payload.eventType === 'INSERT') {
-            triggerToast(`🎉 New user account registered: ${payload.new.name || payload.new.email}`, 'info');
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(contactsChannel);
-      supabase.removeChannel(profilesChannel);
-    };
-  }, []);
+  const triggerToast = (message, type = 'success') => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3500);
+  };
 
   // Contact Handlers
   const handleUpdateContactStatus = async (id, newStatus) => {
+    // Optimistic UI update
+    const updated = contacts.map(c => c.id === id ? { ...c, status: newStatus } : c);
+    setContacts(updated);
+    if (selectedContact && selectedContact.id === id) {
+      setSelectedContact({ ...selectedContact, status: newStatus });
+    }
+
     try {
-      const updated = contacts.map(c => c.id === id ? { ...c, status: newStatus } : c);
+      if (import.meta.env.VITE_SUPABASE_URL) {
+        const { error } = await supabase
+          .from('contact_submissions')
+          .update({ status: newStatus })
+          .eq('id', id);
+          
+        if (error) throw error;
+      }
+      triggerToast(`Inquiry ${id} status updated to ${newStatus}`);
+    } catch (e) {
+      console.error("Error updating status in Supabase", e);
+      triggerToast(`Failed to update ${id}`, 'error');
+    }
+  };
+
+  const handleDeleteContact = async (id) => {
+    if (window.confirm("Are you sure you want to delete this submission?")) {
+      // Optimistic UI update
+      const updated = contacts.filter(c => c.id !== id);
       setContacts(updated);
       if (selectedContact && selectedContact.id === id) {
         setSelectedContact({ ...selectedContact, status: newStatus });
       }
+
+      try {
+        if (import.meta.env.VITE_SUPABASE_URL) {
+          const { error } = await supabase
+            .from('contact_submissions')
+            .delete()
+            .eq('id', id);
+            
+          if (error) throw error;
+        }
+        triggerToast(`Inquiry ${id} deleted successfully.`, 'info');
+      } catch (e) {
+        console.error("Error deleting from Supabase", e);
+        triggerToast(`Failed to delete ${id}`, 'error');
+      }
+    }
+  };
 
       const { error } = await supabase
         .from('contact_submissions')
@@ -221,13 +333,60 @@ export default function App() {
 
   // Filtered Users
   const filteredUsers = users.filter(u => {
+    if (!userSearch) return true;
     const searchLower = userSearch.toLowerCase();
-    return !userSearch ||
+    return (
       (u.name && u.name.toLowerCase().includes(searchLower)) ||
       (u.email && u.email.toLowerCase().includes(searchLower)) ||
       (u.phone_number && u.phone_number.toLowerCase().includes(searchLower)) ||
-      (u.id && u.id.toLowerCase().includes(searchLower));
+      (u.id && u.id.toLowerCase().includes(searchLower))
+    );
   });
+
+  // User Handlers
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm("Are you sure you want to delete this user profile? This action cannot be undone.")) {
+      const updated = users.filter(u => u.id !== userId);
+      setUsers(updated);
+      if (selectedUser && selectedUser.id === userId) {
+        setSelectedUser(null);
+      }
+
+      try {
+        if (import.meta.env.VITE_SUPABASE_URL) {
+          const { error } = await supabase
+            .from('profiles')
+            .delete()
+            .eq('id', userId);
+            
+          if (error) throw error;
+        }
+        triggerToast('User profile deleted successfully.', 'info');
+      } catch (e) {
+        console.error("Error deleting user from Supabase", e);
+        triggerToast('Failed to delete user profile.', 'error');
+      }
+    }
+  };
+
+  const handleRefreshUsers = async () => {
+    setUsersLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('email', { ascending: true });
+
+      if (error) throw error;
+      setUsers(data || []);
+      triggerToast('Users list refreshed successfully.');
+    } catch (e) {
+      console.error("Error refreshing users", e);
+      triggerToast('Failed to refresh users.', 'error');
+    } finally {
+      setUsersLoading(false);
+    }
+  };
 
   const newCount = contacts.filter(c => c.status === 'New').length;
   const inProgressCount = contacts.filter(c => c.status === 'In Progress').length;
@@ -273,11 +432,31 @@ export default function App() {
             onClick={() => setActiveTab('users')}
           >
             <FiUsers /> Registered Users
+            {users.length > 0 && <span className="users-count-badge">{users.length}</span>}
+          </button>
+
+          <button
+            className={`nav-btn ${activeTab === 'editor' ? 'active' : ''}`}
+            onClick={() => setActiveTab('editor')}
+          >
+            <FiUsers /> Registered Users
             <span className="count-badge">{users.length}</span>
           </button>
         </nav>
 
         <div className="sidebar-footer">
+          <div className="sidebar-user-info">
+            <div className="sidebar-user-avatar">
+              {session?.user?.email?.charAt(0).toUpperCase() || 'A'}
+            </div>
+            <div className="sidebar-user-meta">
+              <span className="sidebar-user-email">{session?.user?.email || 'Admin'}</span>
+              <span className="sidebar-user-role">Administrator</span>
+            </div>
+          </div>
+          <button className="sidebar-logout-btn" onClick={handleLogout} title="Sign Out">
+            <FiLogOut /> Sign Out
+          </button>
           <div className="live-status">
             <span className="pulse-dot"></span>
             <span>Supabase Live Sync</span>
@@ -294,19 +473,35 @@ export default function App() {
             <h1 className="page-title">
               {activeTab === 'dashboard' && 'Dashboard Overview'}
               {activeTab === 'contacts' && 'Incoming Contact Inquiries'}
-              {activeTab === 'users' && 'Registered Users Directory'}
+              {activeTab === 'users' && 'Registered Users'}
+              {activeTab === 'editor' && 'Service Accordion Data Manager'}
             </h1>
             <p className="page-subtitle">
-              {activeTab === 'dashboard' && 'Monitor real-time client inquiries, contact statuses, and registered users'}
-              {activeTab === 'contacts' && 'View, update, and manage customer inquiries submitted from the website contact page'}
-              {activeTab === 'users' && 'Directory of all users registered on the website via Supabase Authentication'}
+              {activeTab === 'dashboard' && 'Monitor real-time client inquiries and service accordion configurations'}
+              {activeTab === 'contacts' && 'Watch and manage incoming customer messages submitted from the contact page'}
+              {activeTab === 'users' && 'View and manage all users registered on The Corporate Hub platform'}
+              {activeTab === 'editor' && 'Live edit content, registration steps, and requirements on ServiceAccordion'}
             </p>
           </div>
 
           <div className="topbar-right">
-            <button className="reset-btn" onClick={() => { fetchContacts(); fetchUsers(); triggerToast("Data refreshed from Supabase"); }}>
-              <FiRefreshCw /> Sync Data
-            </button>
+            {activeTab === 'users' && (
+              <div className="action-button-group">
+                <button className="reset-btn" onClick={handleRefreshUsers} disabled={usersLoading}>
+                  <FiRefreshCw className={usersLoading ? 'spin-icon' : ''} /> {usersLoading ? 'Refreshing...' : 'Refresh Users'}
+                </button>
+              </div>
+            )}
+            {activeTab === 'editor' && (
+              <div className="action-button-group">
+                <button className="reset-btn" onClick={handleResetServices}>
+                  <FiRefreshCw /> Reset Defaults
+                </button>
+                <button className="save-btn" onClick={handleSaveServices}>
+                  <FiSave /> Save & Publish Live
+                </button>
+              </div>
+            )}
           </div>
         </header>
 
@@ -345,9 +540,19 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="stat-card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('contacts')}>
-                <div className="stat-icon progress-icon">
-                  <FiClock />
+              <div className="stat-card">
+                <div className="stat-icon users-icon">
+                  <FiUsers />
+                </div>
+                <div className="stat-info">
+                  <span className="stat-label">Registered Users</span>
+                  <span className="stat-value">{users.length}</span>
+                </div>
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-icon services-icon">
+                  <FiLayers />
                 </div>
                 <div className="stat-info">
                   <span className="stat-label">In Progress</span>
@@ -596,22 +801,192 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 3: REGISTERED USERS DIRECTORY */}
+        {/* TAB 3: REGISTERED USERS */}
         {activeTab === 'users' && (
           <div className="users-view">
-            {/* Search Toolbar */}
+            {/* Search Bar */}
             <div className="table-controls-bar">
-              <div className="search-box" style={{ width: '100%' }}>
+              <div className="users-summary-pills">
+                <div className="summary-pill">
+                  <FiUsers className="pill-icon" />
+                  <span>{users.length} Total Users</span>
+                </div>
+              </div>
+
+              <div className="search-box">
                 <FiSearch className="search-icon" />
                 <input
                   type="text"
-                  placeholder="Search registered users by name, email, phone, or User ID..."
+                  placeholder="Search name, email, phone, ID..."
                   value={userSearch}
                   onChange={(e) => setUserSearch(e.target.value)}
                 />
                 {userSearch && (
                   <button className="clear-search" onClick={() => setUserSearch('')}>
                     <FiX />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Users Table */}
+            <div className="table-card">
+              {usersLoading ? (
+                <div className="users-loading-state">
+                  <div className="loading-spinner"></div>
+                  <p>Loading registered users...</p>
+                </div>
+              ) : (
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>User</th>
+                      <th>Email Address</th>
+                      <th>Phone Number</th>
+                      <th>User ID</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredUsers.length === 0 ? (
+                      <tr>
+                        <td colSpan="6" className="empty-table-td">
+                          {users.length === 0
+                            ? 'No registered users found. Users will appear here once they sign up on the platform.'
+                            : 'No users matching your search criteria.'}
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredUsers.map((u, idx) => (
+                        <tr key={u.id}>
+                          <td className="col-num">{idx + 1}</td>
+                          <td className="col-user">
+                            <div className="table-user-flex">
+                              <div className="table-avatar user-avatar-gradient">
+                                {u.name ? u.name.charAt(0).toUpperCase() : '?'}
+                              </div>
+                              <span>{u.name || 'Unnamed User'}</span>
+                            </div>
+                          </td>
+                          <td className="col-email">
+                            <a href={`mailto:${u.email}`} className="email-link">{u.email || '—'}</a>
+                          </td>
+                          <td className="col-phone">
+                            {u.phone_number ? (
+                              <a href={`tel:${u.phone_number}`} className="phone-link">{u.phone_number}</a>
+                            ) : (
+                              <span className="no-data">Not provided</span>
+                            )}
+                          </td>
+                          <td className="col-id">
+                            <code className="user-id-code">{u.id ? u.id.slice(0, 8) + '...' : '—'}</code>
+                          </td>
+                          <td className="col-actions">
+                            <button
+                              className="icon-action-btn view-btn"
+                              title="View User Details"
+                              onClick={() => setSelectedUser(u)}
+                            >
+                              <FiEye />
+                            </button>
+                            <button
+                              className="icon-action-btn delete-btn"
+                              title="Delete User Profile"
+                              onClick={() => handleDeleteUser(u.id)}
+                            >
+                              <FiTrash2 />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              )}
+            </div>
+
+            {/* Selected User Modal */}
+            {selectedUser && (
+              <div className="modal-overlay" onClick={() => setSelectedUser(null)}>
+                <div className="contact-modal-card user-modal-card" onClick={(e) => e.stopPropagation()}>
+                  <div className="modal-header user-modal-header">
+                    <div>
+                      <h2>User Profile</h2>
+                      <p>Registered platform user details</p>
+                    </div>
+                    <button className="modal-close" onClick={() => setSelectedUser(null)}>
+                      <FiX />
+                    </button>
+                  </div>
+
+                  <div className="modal-body">
+                    <div className="user-profile-header">
+                      <div className="user-profile-avatar">
+                        {selectedUser.name ? selectedUser.name.charAt(0).toUpperCase() : '?'}
+                      </div>
+                      <div className="user-profile-name">
+                        <h3>{selectedUser.name || 'Unnamed User'}</h3>
+                        <span className="user-role-badge">Registered User</span>
+                      </div>
+                    </div>
+
+                    <div className="modal-info-grid">
+                      <div className="modal-info-item">
+                        <label><FiMail /> Email Address</label>
+                        <div>
+                          <a href={`mailto:${selectedUser.email}`}>{selectedUser.email || '—'}</a>
+                        </div>
+                      </div>
+
+                      <div className="modal-info-item">
+                        <label><FiPhone /> Phone Number</label>
+                        <div>
+                          {selectedUser.phone_number ? (
+                            <a href={`tel:${selectedUser.phone_number}`}>{selectedUser.phone_number}</a>
+                          ) : (
+                            <span className="no-data">Not provided</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="modal-info-item full-width">
+                        <label><FiHash /> User ID</label>
+                        <div>
+                          <code className="user-id-code-full">{selectedUser.id}</code>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="modal-footer">
+                    <button className="btn-secondary" onClick={() => setSelectedUser(null)}>
+                      Close
+                    </button>
+                    <button className="btn-danger" onClick={() => handleDeleteUser(selectedUser.id)}>
+                      <FiTrash2 /> Delete User
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 4: SERVICE ACCORDION DATA MANAGER */}
+        {activeTab === 'editor' && (
+          <div className="editor-view">
+            {/* Category Selector Bar */}
+            <div className="category-select-bar">
+              <label>Select Category to Edit:</label>
+              <div className="category-pills-list">
+                {services.map(s => (
+                  <button
+                    key={s.slug}
+                    className={`category-pill ${selectedSlug === s.slug ? 'active' : ''}`}
+                    onClick={() => setSelectedSlug(s.slug)}
+                  >
+                    {s.title}
                   </button>
                 )}
               </div>
