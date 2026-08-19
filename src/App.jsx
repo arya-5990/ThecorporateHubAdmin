@@ -17,7 +17,6 @@ import {
   FiPhone,
   FiMail,
   FiUser,
-  FiUsers,
   FiLayers,
   FiFileText,
   FiCheck,
@@ -27,6 +26,7 @@ import {
   FiAlertCircle,
   FiCalendar,
   FiHash,
+  FiSave,
   FiLogOut
 } from 'react-icons/fi';
 
@@ -159,25 +159,6 @@ export default function App() {
       }
     };
     fetchUsers();
-
-  // Fetch Registered Users from Supabase (public.profiles)
-  const fetchUsers = async () => {
-    try {
-      setLoadingUsers(true);
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*');
-
-      if (error) {
-        console.error('Error fetching registered profiles from Supabase:', error);
-      } else if (data) {
-        setUsers(data);
-      }
-    } catch (e) {
-      console.error("Error connecting to Supabase profiles", e);
-    } finally {
-      setLoadingUsers(false);
-    }
   }, [session]);
 
   const handleLogout = async () => {
@@ -248,48 +229,6 @@ export default function App() {
     }
   };
 
-  const handleDeleteContact = async (id) => {
-    if (window.confirm("Are you sure you want to delete this submission?")) {
-      // Optimistic UI update
-      const updated = contacts.filter(c => c.id !== id);
-      setContacts(updated);
-      if (selectedContact && selectedContact.id === id) {
-        setSelectedContact({ ...selectedContact, status: newStatus });
-      }
-
-      try {
-        if (import.meta.env.VITE_SUPABASE_URL) {
-          const { error } = await supabase
-            .from('contact_submissions')
-            .delete()
-            .eq('id', id);
-            
-          if (error) throw error;
-        }
-        triggerToast(`Inquiry ${id} deleted successfully.`, 'info');
-      } catch (e) {
-        console.error("Error deleting from Supabase", e);
-        triggerToast(`Failed to delete ${id}`, 'error');
-      }
-    }
-  };
-
-      const { error } = await supabase
-        .from('contact_submissions')
-        .update({ status: newStatus })
-        .eq('id', id);
-
-      if (error) {
-        console.error('Error updating status in Supabase:', error);
-        triggerToast(`Failed to update status: ${error.message}`, 'error');
-        fetchContacts();
-      } else {
-        triggerToast(`Inquiry ${id} status updated to ${newStatus}`);
-      }
-    } catch (e) {
-      console.error("Status update error", e);
-    }
-  };
 
   const handleDeleteContact = async (id) => {
     if (window.confirm(`Are you sure you want to delete submission ${id}?`)) {
@@ -388,6 +327,25 @@ export default function App() {
     }
   };
 
+  // Service Accordion Handlers
+  const handleResetServices = () => {
+    if (window.confirm("Reset all service accordion configuration back to default?")) {
+      setServices(defaultServicesData);
+      localStorage.removeItem("corporatehub_services_data");
+      triggerToast("Service configuration reset to defaults.");
+    }
+  };
+
+  const handleSaveServices = () => {
+    try {
+      localStorage.setItem("corporatehub_services_data", JSON.stringify(services));
+      triggerToast("Service accordion changes published successfully!");
+    } catch (e) {
+      console.error("Error saving services", e);
+      triggerToast("Failed to save service configuration.", "error");
+    }
+  };
+
   const newCount = contacts.filter(c => c.status === 'New').length;
   const inProgressCount = contacts.filter(c => c.status === 'In Progress').length;
 
@@ -435,13 +393,12 @@ export default function App() {
             {users.length > 0 && <span className="users-count-badge">{users.length}</span>}
           </button>
 
-          <button
+          {/* <button
             className={`nav-btn ${activeTab === 'editor' ? 'active' : ''}`}
             onClick={() => setActiveTab('editor')}
           >
-            <FiUsers /> Registered Users
-            <span className="count-badge">{users.length}</span>
-          </button>
+            <FiSliders /> Accordion Data Editor
+          </button> */}
         </nav>
 
         <div className="sidebar-footer">
@@ -973,10 +930,9 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 4: SERVICE ACCORDION DATA MANAGER */}
-        {activeTab === 'editor' && (
+        {/* TAB 4: SERVICE ACCORDION DATA MANAGER (COMMENTED OUT FOR NOW) */}
+        {/* {activeTab === 'editor' && (
           <div className="editor-view">
-            {/* Category Selector Bar */}
             <div className="category-select-bar">
               <label>Select Category to Edit:</label>
               <div className="category-pills-list">
@@ -988,11 +944,10 @@ export default function App() {
                   >
                     {s.title}
                   </button>
-                )}
+                ))}
               </div>
             </div>
 
-            {/* Users Directory Table */}
             <div className="table-card">
               <table className="admin-table">
                 <thead>
@@ -1058,7 +1013,7 @@ export default function App() {
               </table>
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Submission Details Modal */}
         {selectedContact && (
