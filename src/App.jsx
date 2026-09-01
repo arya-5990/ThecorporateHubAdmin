@@ -3,10 +3,12 @@ import './App.css';
 import { servicesData as defaultServicesData } from './data/servicesData';
 import { supabase } from './supabase';
 import LoginPage from './LoginPage';
+import SeoManager from './SeoManager';
 import {
   FiGrid,
   FiInbox,
   FiUsers,
+  FiGlobe,
   FiSearch,
   FiCheckCircle,
   FiClock,
@@ -393,12 +395,12 @@ export default function App() {
             {users.length > 0 && <span className="users-count-badge">{users.length}</span>}
           </button>
 
-          {/* <button
-            className={`nav-btn ${activeTab === 'editor' ? 'active' : ''}`}
-            onClick={() => setActiveTab('editor')}
+          <button
+            className={`nav-btn ${activeTab === 'seo' ? 'active' : ''}`}
+            onClick={() => setActiveTab('seo')}
           >
-            <FiSliders /> Accordion Data Editor
-          </button> */}
+            <FiGlobe /> SEO Management
+          </button>
         </nav>
 
         <div className="sidebar-footer">
@@ -431,13 +433,13 @@ export default function App() {
               {activeTab === 'dashboard' && 'Dashboard Overview'}
               {activeTab === 'contacts' && 'Incoming Contact Inquiries'}
               {activeTab === 'users' && 'Registered Users'}
-              {activeTab === 'editor' && 'Service Accordion Data Manager'}
+              {activeTab === 'seo' && 'Location × Service SEO Manager'}
             </h1>
             <p className="page-subtitle">
               {activeTab === 'dashboard' && 'Monitor real-time client inquiries and service accordion configurations'}
               {activeTab === 'contacts' && 'Watch and manage incoming customer messages submitted from the contact page'}
               {activeTab === 'users' && 'View and manage all users registered on The Corporate Hub platform'}
-              {activeTab === 'editor' && 'Live edit content, registration steps, and requirements on ServiceAccordion'}
+              {activeTab === 'seo' && 'Manage target cities, service taxonomies, metadata and publishing status for /locations/[city]/[service]'}
             </p>
           </div>
 
@@ -930,90 +932,10 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 4: SERVICE ACCORDION DATA MANAGER (COMMENTED OUT FOR NOW) */}
-        {/* {activeTab === 'editor' && (
-          <div className="editor-view">
-            <div className="category-select-bar">
-              <label>Select Category to Edit:</label>
-              <div className="category-pills-list">
-                {services.map(s => (
-                  <button
-                    key={s.slug}
-                    className={`category-pill ${selectedSlug === s.slug ? 'active' : ''}`}
-                    onClick={() => setSelectedSlug(s.slug)}
-                  >
-                    {s.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="table-card">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>User Profile</th>
-                    <th>Email Address</th>
-                    <th>Phone Number</th>
-                    <th>User UUID</th>
-                    <th>Account Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredUsers.map((user) => (
-                    <tr key={user.id}>
-                      <td>
-                        <div className="table-user-flex">
-                          <div className="user-avatar-circle">
-                            {user.name ? user.name.charAt(0).toUpperCase() : <FiUser />}
-                          </div>
-                          <div>
-                            <strong>{user.name || 'Registered Member'}</strong>
-                            <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Standard Account</div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td>
-                        <a href={`mailto:${user.email}`} className="user-email-link">
-                          <FiMail /> {user.email}
-                        </a>
-                      </td>
-
-                      <td>
-                        {user.phone_number ? (
-                          <a href={`tel:${user.phone_number}`} className="user-phone-link">
-                            <FiPhone /> {user.phone_number}
-                          </a>
-                        ) : (
-                          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Not Provided</span>
-                        )}
-                      </td>
-
-                      <td>
-                        <code className="uuid-badge">{user.id}</code>
-                      </td>
-
-                      <td>
-                        <span className="status-badge resolved">
-                          Active Member
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-
-                  {filteredUsers.length === 0 && (
-                    <tr>
-                      <td colSpan={5} className="empty-table-td">
-                        No registered users found matching search filter.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )} */}
+        {/* TAB 4: LOCATION x SERVICE SEO MANAGER */}
+        {activeTab === 'seo' && (
+          <SeoManager triggerToast={triggerToast} />
+        )}
 
         {/* Submission Details Modal */}
         {selectedContact && (
