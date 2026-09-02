@@ -149,13 +149,11 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
         </div>
       </div>
 
-      {/* 2-Column Responsive Layout */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '24px' }}>
-        {/* LEFT COLUMN: Content Editor */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Main H1 Heading */}
+          
           <div className="form-group">
-            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>H1 Heading *</label>
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>1. Main Heading *</label>
             <input
               type="text"
               value={formData.h1}
@@ -165,10 +163,8 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
             />
           </div>
 
-          {/* Introduction */}
           <div className="form-group">
-            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>Introduction Overview *</label>
-            <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>Brief background introducing the service benefits in {city}.</span>
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>2. Hero Introduction *</label>
             <textarea
               rows={4}
               value={formData.intro}
@@ -177,10 +173,111 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
             />
           </div>
 
-          {/* Local Information with Helper Text */}
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>3. What Is the Service?</label>
+            <textarea
+              rows={3}
+              value={formData.what_is_service}
+              onChange={(e) => setFormData({ ...formData, what_is_service: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>4. Who Should Choose This?</label>
+            <textarea
+              rows={3}
+              value={formData.who_should_choose}
+              onChange={(e) => setFormData({ ...formData, who_should_choose: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>5. Key Benefits</label>
+            <textarea
+              rows={3}
+              value={formData.key_benefits}
+              onChange={(e) => setFormData({ ...formData, key_benefits: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>6. Eligibility / Requirements</label>
+            <textarea
+              rows={3}
+              value={formData.eligibility}
+              onChange={(e) => setFormData({ ...formData, eligibility: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>7. Documents Required</label>
+            <textarea
+              rows={3}
+              value={formData.documents}
+              onChange={(e) => setFormData({ ...formData, documents: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>8. Process *</label>
+            <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>Enter each step on a new line.</span>
+            <textarea
+              rows={4}
+              value={formData.process}
+              onChange={(e) => setFormData({ ...formData, process: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>9. Timeline</label>
+            <input
+              type="text"
+              value={formData.timeline}
+              onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+              placeholder="e.g. 5 to 7 Business Days"
+              style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.92rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>10. Tax & Compliance</label>
+            <textarea
+              rows={3}
+              value={formData.tax_compliance}
+              onChange={(e) => setFormData({ ...formData, tax_compliance: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>11. Comparison</label>
+            <textarea
+              rows={3}
+              value={formData.comparison}
+              onChange={(e) => setFormData({ ...formData, comparison: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>12. How It Helps Your Business Grow</label>
+            <textarea
+              rows={3}
+              value={formData.how_it_helps}
+              onChange={(e) => setFormData({ ...formData, how_it_helps: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
           <div className="form-group" style={{ background: '#f8fafc', padding: '16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
             <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>
-              Local Regulatory & City Information *
+              13. Local Information *
             </label>
             <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', color: '#1e40af', padding: '8px 12px', borderRadius: '6px', fontSize: '0.8rem', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <FiHelpCircle /> Add genuinely useful information relevant to businesses in {city}. Do not simply replace the city name in generic content.
@@ -194,69 +291,19 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
             />
           </div>
 
-          {/* Why Choose Service */}
           <div className="form-group">
-            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>Why Choose {service} in {city}</label>
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>14. Why The Corporate Hub?</label>
             <textarea
               rows={3}
-              value={formData.why_choose_service}
-              onChange={(e) => setFormData({ ...formData, why_choose_service: e.target.value })}
+              value={formData.why_corporate_hub}
+              onChange={(e) => setFormData({ ...formData, why_corporate_hub: e.target.value })}
               style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
             />
           </div>
 
-          {/* Registration Process */}
-          <div className="form-group">
-            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>Step-by-Step Registration Process *</label>
-            <span style={{ fontSize: '0.78rem', color: '#64748b', display: 'block', marginBottom: '6px' }}>Enter each step on a new line.</span>
-            <textarea
-              rows={4}
-              value={formData.process}
-              onChange={(e) => setFormData({ ...formData, process: e.target.value })}
-              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
-            />
-          </div>
-
-          {/* Documents Required */}
-          <div className="form-group">
-            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>Documents Required</label>
-            <textarea
-              rows={3}
-              value={formData.documents}
-              onChange={(e) => setFormData({ ...formData, documents: e.target.value })}
-              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
-            />
-          </div>
-
-          {/* Pricing & Timeline */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div className="form-group">
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>Pricing</label>
-              <input
-                type="text"
-                value={formData.pricing}
-                onChange={(e) => setFormData({ ...formData, pricing: e.target.value })}
-                placeholder="e.g. Starting from ₹6,999"
-                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.92rem', color: '#0f172a' }}
-              />
-            </div>
-
-            <div className="form-group">
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>Estimated Timeline</label>
-              <input
-                type="text"
-                value={formData.timeline}
-                onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                placeholder="e.g. 5 to 7 Business Days"
-                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.92rem', color: '#0f172a' }}
-              />
-            </div>
-          </div>
-
-          {/* FAQ MANAGER SECTION */}
           <div style={{ borderTop: '2px solid #e2e8f0', paddingTop: '20px', marginTop: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>City FAQ Manager ({faqs.length})</h3>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>15. Frequently Asked Questions ({faqs.length})</h3>
               <button
                 type="button"
                 onClick={handleAddFaq}
@@ -300,11 +347,29 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
               ))}
             </div>
           </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>16. Related Services</label>
+            <textarea
+              rows={3}
+              value={formData.related_services}
+              onChange={(e) => setFormData({ ...formData, related_services: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>17. Final Call to Action</label>
+            <input
+              type="text"
+              value={formData.call_to_action}
+              onChange={(e) => setFormData({ ...formData, call_to_action: e.target.value })}
+              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.94rem', color: '#0f172a' }}
+            />
+          </div>
         </div>
 
-        {/* RIGHT COLUMN: SEO Settings & Readiness Panel */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Page Identity Box */}
           <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '18px' }}>
             <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', margin: '0 0 12px 0' }}>Page Identity & URL</h4>
 
