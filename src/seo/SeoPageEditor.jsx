@@ -28,7 +28,17 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
     why_corporate_hub: page.why_corporate_hub || '',
     canonical_url: page.canonical_url || '',
     og_image: page.og_image || '',
-    published: page.published || false
+    published: page.published || false,
+    // Fields that may return null from Supabase — must have '' fallback
+    what_is_service: page.what_is_service || '',
+    who_should_choose: page.who_should_choose || '',
+    key_benefits: page.key_benefits || '',
+    eligibility: page.eligibility || '',
+    tax_compliance: page.tax_compliance || '',
+    comparison: page.comparison || '',
+    how_it_helps: page.how_it_helps || '',
+    related_services: page.related_services || '',
+    call_to_action: page.call_to_action || '',
   });
 
   const [faqs, setFaqs] = useState(page.faqs || [
