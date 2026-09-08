@@ -164,6 +164,17 @@ export default function SeoManager({ triggerToast }) {
             pricing: newPageData.pricing,
             timeline: newPageData.timeline,
             why_corporate_hub: newPageData.why_corporate_hub,
+            what_is_service: newPageData.what_is_service || null,
+            who_should_choose: newPageData.who_should_choose || null,
+            key_benefits: newPageData.key_benefits || null,
+            eligibility: newPageData.eligibility || null,
+            tax_compliance: newPageData.tax_compliance || null,
+            comparison: newPageData.comparison || null,
+            how_it_helps: newPageData.how_it_helps || null,
+            related_services: newPageData.related_services || null,
+            call_to_action: newPageData.call_to_action || null,
+            og_image: newPageData.og_image || null,
+            canonical_url: newPageData.canonical_url || null,
             published: false
           })
           .select('*')
@@ -205,6 +216,17 @@ export default function SeoManager({ triggerToast }) {
             pricing: dupData.pricing,
             timeline: dupData.timeline,
             why_corporate_hub: dupData.why_corporate_hub,
+            what_is_service: dupData.what_is_service || null,
+            who_should_choose: dupData.who_should_choose || null,
+            key_benefits: dupData.key_benefits || null,
+            eligibility: dupData.eligibility || null,
+            tax_compliance: dupData.tax_compliance || null,
+            comparison: dupData.comparison || null,
+            how_it_helps: dupData.how_it_helps || null,
+            related_services: dupData.related_services || null,
+            call_to_action: dupData.call_to_action || null,
+            og_image: dupData.og_image || null,
+            canonical_url: dupData.canonical_url || null,
             published: false
           })
           .select('*')
@@ -214,12 +236,12 @@ export default function SeoManager({ triggerToast }) {
         if (data) duplicatedRecord = data;
 
         if (dupData.faqs && dupData.faqs.length > 0) {
-          const faqRows = dupData.faqs.map((f) => ({
+          const faqRows = dupData.faqs.map((f, i) => ({
             page_id: duplicatedRecord.id,
             question: f.question,
             answer: f.answer,
-            sort_order: f.sort_order,
-            is_active: true
+            sort_order: f.sort_order ?? i + 1,
+            is_active: f.is_active ?? true
           }));
           await supabase.from('seo_faqs').insert(faqRows);
         }
@@ -253,12 +275,37 @@ export default function SeoManager({ triggerToast }) {
             pricing: updatedPage.pricing,
             timeline: updatedPage.timeline,
             why_corporate_hub: updatedPage.why_corporate_hub,
+            what_is_service: updatedPage.what_is_service || null,
+            who_should_choose: updatedPage.who_should_choose || null,
+            key_benefits: updatedPage.key_benefits || null,
+            eligibility: updatedPage.eligibility || null,
+            tax_compliance: updatedPage.tax_compliance || null,
+            comparison: updatedPage.comparison || null,
+            how_it_helps: updatedPage.how_it_helps || null,
+            related_services: updatedPage.related_services || null,
+            call_to_action: updatedPage.call_to_action || null,
+            og_image: updatedPage.og_image || null,
+            canonical_url: updatedPage.canonical_url || null,
             published: updatedPage.published,
             updated_at: new Date().toISOString()
           })
           .eq('id', updatedPage.id);
 
         if (error) throw error;
+
+        // Upsert FAQs: delete existing then re-insert current set
+        await supabase.from('seo_faqs').delete().eq('page_id', updatedPage.id);
+        if (updatedPage.faqs && updatedPage.faqs.length > 0) {
+          const faqRows = updatedPage.faqs.map((f, i) => ({
+            page_id: updatedPage.id,
+            question: f.question,
+            answer: f.answer,
+            sort_order: f.sort_order ?? i + 1,
+            is_active: f.is_active ?? true
+          }));
+          const { error: faqError } = await supabase.from('seo_faqs').insert(faqRows);
+          if (faqError) console.error('FAQ save error:', faqError);
+        }
       }
 
       const nextPages = pages.map((p) => (p.id === updatedPage.id ? { ...p, ...updatedPage, updated_at: new Date().toISOString() } : p));
@@ -287,12 +334,37 @@ export default function SeoManager({ triggerToast }) {
             pricing: updatedPage.pricing,
             timeline: updatedPage.timeline,
             why_corporate_hub: updatedPage.why_corporate_hub,
+            what_is_service: updatedPage.what_is_service || null,
+            who_should_choose: updatedPage.who_should_choose || null,
+            key_benefits: updatedPage.key_benefits || null,
+            eligibility: updatedPage.eligibility || null,
+            tax_compliance: updatedPage.tax_compliance || null,
+            comparison: updatedPage.comparison || null,
+            how_it_helps: updatedPage.how_it_helps || null,
+            related_services: updatedPage.related_services || null,
+            call_to_action: updatedPage.call_to_action || null,
+            og_image: updatedPage.og_image || null,
+            canonical_url: updatedPage.canonical_url || null,
             published: true,
             updated_at: new Date().toISOString()
           })
           .eq('id', updatedPage.id);
 
         if (error) throw error;
+
+        // Upsert FAQs: delete existing then re-insert current set
+        await supabase.from('seo_faqs').delete().eq('page_id', updatedPage.id);
+        if (updatedPage.faqs && updatedPage.faqs.length > 0) {
+          const faqRows = updatedPage.faqs.map((f, i) => ({
+            page_id: updatedPage.id,
+            question: f.question,
+            answer: f.answer,
+            sort_order: f.sort_order ?? i + 1,
+            is_active: f.is_active ?? true
+          }));
+          const { error: faqError } = await supabase.from('seo_faqs').insert(faqRows);
+          if (faqError) console.error('FAQ publish error:', faqError);
+        }
       }
 
       const nextPages = pages.map((p) => (p.id === updatedPage.id ? { ...p, ...updatedPage, published: true, updated_at: new Date().toISOString() } : p));
