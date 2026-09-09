@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ConfirmModal from '../ConfirmModal';
 import {
   FiSave,
   FiEye,
@@ -51,6 +52,7 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
   ]);
 
   const [isSaving, setIsSaving] = useState(false);
+  const [confirmModal, setConfirmModal] = useState({ isOpen: false, title: '', message: '', confirmText: 'Confirm', type: 'primary', onConfirm: null });
 
   const city = page.city_name || page.seo_locations?.city_name || 'City';
   const state = page.state_name || page.seo_locations?.state_name || 'State';
@@ -95,15 +97,30 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
 
   const handlePublishClick = async () => {
     if (!isReady) {
-      alert("Please fill in required fields (H1, Meta Title, Meta Description, Intro, Local Information, Process) before publishing.");
+      setConfirmModal({
+        isOpen: true,
+        title: "Required Fields Missing",
+        message: "Please complete all required SEO fields (H1, Meta Title, Meta Description, Intro, Local Information, and Process) before publishing live.",
+        confirmText: "Got It",
+        type: "warning",
+        onConfirm: () => setConfirmModal((prev) => ({ ...prev, isOpen: false }))
+      });
       return;
     }
 
-    if (window.confirm(`Publish ${city} × ${service} live to search crawlers and public visitors?`)) {
-      setIsSaving(true);
-      await onPublish({ ...formData, faqs, published: true });
-      setIsSaving(false);
-    }
+    setConfirmModal({
+      isOpen: true,
+      title: `Publish ${city} × ${service} Live`,
+      message: `Are you sure you want to publish the SEO page for ${city} × ${service} live to search engine crawlers and public visitors?`,
+      confirmText: "Publish Live",
+      type: "primary",
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        setIsSaving(true);
+        await onPublish({ ...formData, faqs, published: true });
+        setIsSaving(false);
+      }
+    });
   };
 
   return (
@@ -479,6 +496,16 @@ export default function SeoPageEditor({ page, onSave, onPublish, onUnpublish, on
           </div>
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText={confirmModal.confirmText}
+        type={confirmModal.type}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FiPlus, FiMapPin, FiCheckCircle, FiXCircle } from 'react-icons/fi';
+import { FiPlus, FiMapPin, FiCheckCircle, FiXCircle, FiTrash2 } from 'react-icons/fi';
 
-export default function SeoLocationsList({ locations, onToggleActive, onCreateLocation }) {
+export default function SeoLocationsList({ locations, onToggleActive, onCreateLocation, onDeleteLocation }) {
   const [cityName, setCityName] = useState('');
   const [stateName, setStateName] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
@@ -106,21 +106,44 @@ export default function SeoLocationsList({ locations, onToggleActive, onCreateLo
                   </span>
                 </td>
                 <td style={{ textAlign: 'right' }}>
-                  <button
-                    onClick={() => onToggleActive(loc)}
-                    style={{
-                      background: loc.is_active ? '#fef2f2' : '#ecfdf5',
-                      color: loc.is_active ? '#dc2626' : '#059669',
-                      border: loc.is_active ? '1px solid #fca5a5' : '1px solid #a7f3d0',
-                      padding: '5px 12px',
-                      borderRadius: '6px',
-                      fontSize: '0.82rem',
-                      fontWeight: 600,
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {loc.is_active ? 'Deactivate' : 'Activate'}
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', alignItems: 'center' }}>
+                    <button
+                      onClick={() => onToggleActive(loc)}
+                      style={{
+                        background: loc.is_active ? '#fef2f2' : '#ecfdf5',
+                        color: loc.is_active ? '#dc2626' : '#059669',
+                        border: loc.is_active ? '1px solid #fca5a5' : '1px solid #a7f3d0',
+                        padding: '5px 12px',
+                        borderRadius: '6px',
+                        fontSize: '0.82rem',
+                        fontWeight: 600,
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {loc.is_active ? 'Deactivate' : 'Activate'}
+                    </button>
+                    {onDeleteLocation && (
+                      <button
+                        onClick={() => onDeleteLocation(loc)}
+                        title="Delete City Location"
+                        style={{
+                          background: '#fef2f2',
+                          color: '#dc2626',
+                          border: '1px solid #fca5a5',
+                          padding: '5px 10px',
+                          borderRadius: '6px',
+                          fontSize: '0.82rem',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <FiTrash2 />
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}

@@ -4,6 +4,7 @@ import { servicesData as defaultServicesData } from './data/servicesData';
 import { supabase } from './supabase';
 import LoginPage from './LoginPage';
 import SeoManager from './SeoManager';
+import ConfirmModal from './ConfirmModal';
 import {
   FiGrid,
   FiInbox,
@@ -86,6 +87,9 @@ export default function App() {
   // Toast State
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
+  // Confirm Modal State
+  const [confirmModal, setConfirmModal] = useState({ isOpen: false, title: '', message: '', confirmText: 'Delete', type: 'danger', onConfirm: null });
+
   // Auth Check on Mount
   useEffect(() => {
     // Check current session
@@ -103,63 +107,65 @@ export default function App() {
   }, []);
 
   // Load Contacts & Services from LocalStorage
-  useEffect(() => {
-    // Only fetch data when authenticated
-    if (!session) return;
-
-    // Load Contacts from Supabase
-    const fetchContacts = async () => {
-      try {
-        if (!import.meta.env.VITE_SUPABASE_URL) {
-          console.warn("Supabase not configured, using mock data");
-          setContacts(INITIAL_CONTACTS);
-          return;
-        }
-
-        const { data, error } = await supabase
-          .from('contact_submissions')
-          .select('*')
-          .order('date', { ascending: false });
-
-        if (error) throw error;
-        
-        // If DB is empty, maybe fallback to initial or just use empty
-        if (data && data.length > 0) {
-          setContacts(data);
-        } else {
-          setContacts([]);
-        }
-      } catch (e) {
-        console.error("Error loading contacts from Supabase", e);
+  // Load Contacts from Supabase
+  const fetchContacts = async () => {
+    setLoadingContacts(true);
+    try {
+      if (!import.meta.env.VITE_SUPABASE_URL) {
+        console.warn("Supabase not configured, using mock data");
         setContacts(INITIAL_CONTACTS);
+        return;
       }
-    };
-    fetchContacts();
 
-    // Load Registered Users from Supabase profiles table
-    const fetchUsers = async () => {
-      setUsersLoading(true);
-      try {
-        if (!import.meta.env.VITE_SUPABASE_URL) {
-          console.warn("Supabase not configured, skipping user fetch");
-          setUsersLoading(false);
-          return;
-        }
+      const { data, error } = await supabase
+        .from('contact_submissions')
+        .select('*')
+        .order('date', { ascending: false });
 
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .order('email', { ascending: true });
+      if (error) throw error;
+      
+      if (data && data.length > 0) {
+        setContacts(data);
+      } else {
+        setContacts([]);
+      }
+    } catch (e) {
+      console.error("Error loading contacts from Supabase", e);
+      setContacts(INITIAL_CONTACTS);
+    } finally {
+      setLoadingContacts(false);
+    }
+  };
 
-        if (error) throw error;
-        setUsers(data || []);
-      } catch (e) {
-        console.error("Error loading users from Supabase", e);
-        setUsers([]);
-      } finally {
+  // Load Registered Users from Supabase profiles table
+  const fetchUsers = async () => {
+    setUsersLoading(true);
+    try {
+      if (!import.meta.env.VITE_SUPABASE_URL) {
+        console.warn("Supabase not configured, skipping user fetch");
         setUsersLoading(false);
+        return;
       }
-    };
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('email', { ascending: true });
+
+      if (error) throw error;
+      setUsers(data || []);
+    } catch (e) {
+      console.error("Error loading users from Supabase", e);
+      setUsers([]);
+    } finally {
+      setUsersLoading(false);
+    }
+  };
+
+  // Fetch on auth session change
+  useEffect(() => {
+    if (!session) return;
+    fetchContacts();
     fetchUsers();
   }, [session]);
 
@@ -233,30 +239,37 @@ export default function App() {
 
 
   const handleDeleteContact = async (id) => {
-    if (window.confirm(`Are you sure you want to delete submission ${id}?`)) {
-      try {
-        const updated = contacts.filter(c => c.id !== id);
-        setContacts(updated);
-        if (selectedContact && selectedContact.id === id) {
-          setSelectedContact(null);
-        }
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Submission',
+      message: `Are you sure you want to delete inquiry ${id}? This action cannot be undone.`,
+      confirmText: 'Yes, Delete',
+      type: 'danger',
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        try {
+          const updated = contacts.filter(c => c.id !== id);
+          setContacts(updated);
+          if (selectedContact && selectedContact.id === id) {
+            setSelectedContact(null);
+          }
 
-        const { error } = await supabase
-          .from('contact_submissions')
-          .delete()
-          .eq('id', id);
+          const { error } = await supabase
+            .from('contact_submissions')
+            .delete()
+            .eq('id', id);
 
-        if (error) {
-          console.error('Error deleting submission from Supabase:', error);
-          triggerToast(`Failed to delete: ${error.message}`, 'error');
-          fetchContacts();
-        } else {
-          triggerToast(`Inquiry ${id} deleted successfully.`, 'info');
+          if (error) {
+            console.error('Error deleting submission from Supabase:', error);
+            triggerToast(`Failed to delete: ${error.message}`, 'error');
+          } else {
+            triggerToast(`Inquiry ${id} deleted successfully.`, 'info');
+          }
+        } catch (e) {
+          console.error("Delete submission error", e);
         }
-      } catch (e) {
-        console.error("Delete submission error", e);
       }
-    }
+    });
   };
 
   // Filtered Contacts
@@ -286,56 +299,68 @@ export default function App() {
 
   // User Handlers
   const handleDeleteUser = async (userId) => {
-    if (window.confirm("Are you sure you want to delete this user profile? This action cannot be undone.")) {
-      const updated = users.filter(u => u.id !== userId);
-      setUsers(updated);
-      if (selectedUser && selectedUser.id === userId) {
-        setSelectedUser(null);
-      }
-
-      try {
-        if (import.meta.env.VITE_SUPABASE_URL) {
-          const { error } = await supabase
-            .from('profiles')
-            .delete()
-            .eq('id', userId);
-            
-          if (error) throw error;
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete User Profile',
+      message: 'Are you sure you want to delete this user profile? This action cannot be undone.',
+      confirmText: 'Yes, Delete User',
+      type: 'danger',
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        const updated = users.filter(u => u.id !== userId);
+        setUsers(updated);
+        if (selectedUser && selectedUser.id === userId) {
+          setSelectedUser(null);
         }
-        triggerToast('User profile deleted successfully.', 'info');
-      } catch (e) {
-        console.error("Error deleting user from Supabase", e);
-        triggerToast('Failed to delete user profile.', 'error');
+
+        try {
+          if (import.meta.env.VITE_SUPABASE_URL) {
+            const { error } = await supabase
+              .from('profiles')
+              .delete()
+              .eq('id', userId);
+              
+            if (error) throw error;
+          }
+          triggerToast('User profile deleted successfully.', 'info');
+        } catch (e) {
+          console.error("Error deleting user from Supabase", e);
+          triggerToast('Failed to delete user profile.', 'error');
+        }
       }
-    }
+    });
+  };
+
+  const handleRefreshContacts = async () => {
+    await fetchContacts();
+    triggerToast('Contacts refreshed successfully.');
   };
 
   const handleRefreshUsers = async () => {
-    setUsersLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .order('email', { ascending: true });
+    await fetchUsers();
+    triggerToast('Users list refreshed successfully.');
+  };
 
-      if (error) throw error;
-      setUsers(data || []);
-      triggerToast('Users list refreshed successfully.');
-    } catch (e) {
-      console.error("Error refreshing users", e);
-      triggerToast('Failed to refresh users.', 'error');
-    } finally {
-      setUsersLoading(false);
-    }
+  const handleRefreshAll = async () => {
+    await Promise.all([fetchContacts(), fetchUsers()]);
+    triggerToast('Dashboard data refreshed successfully.');
   };
 
   // Service Accordion Handlers
   const handleResetServices = () => {
-    if (window.confirm("Reset all service accordion configuration back to default?")) {
-      setServices(defaultServicesData);
-      localStorage.removeItem("corporatehub_services_data");
-      triggerToast("Service configuration reset to defaults.");
-    }
+    setConfirmModal({
+      isOpen: true,
+      title: "Reset Service Defaults?",
+      message: "Are you sure you want to reset all service accordion configurations back to default settings? Any local unsaved edits will be cleared.",
+      confirmText: "Reset Defaults",
+      type: "warning",
+      onConfirm: () => {
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        setServices(defaultServicesData);
+        localStorage.removeItem("corporatehub_services_data");
+        triggerToast("Service configuration reset to defaults.");
+      }
+    });
   };
 
   const handleSaveServices = () => {
@@ -444,6 +469,20 @@ export default function App() {
           </div>
 
           <div className="topbar-right">
+            {activeTab === 'dashboard' && (
+              <div className="action-button-group">
+                <button className="reset-btn" onClick={handleRefreshAll} disabled={loadingContacts || usersLoading}>
+                  <FiRefreshCw className={(loadingContacts || usersLoading) ? 'spin-icon' : ''} /> {(loadingContacts || usersLoading) ? 'Refreshing...' : 'Refresh Data'}
+                </button>
+              </div>
+            )}
+            {activeTab === 'contacts' && (
+              <div className="action-button-group">
+                <button className="reset-btn" onClick={handleRefreshContacts} disabled={loadingContacts}>
+                  <FiRefreshCw className={loadingContacts ? 'spin-icon' : ''} /> {loadingContacts ? 'Refreshing...' : 'Refresh Contacts'}
+                </button>
+              </div>
+            )}
             {activeTab === 'users' && (
               <div className="action-button-group">
                 <button className="reset-btn" onClick={handleRefreshUsers} disabled={usersLoading}>
@@ -1034,6 +1073,16 @@ export default function App() {
           </div>
         )}
       </main>
+
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText={confirmModal.confirmText}
+        type={confirmModal.type}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
+      />
     </div>
   );
 }

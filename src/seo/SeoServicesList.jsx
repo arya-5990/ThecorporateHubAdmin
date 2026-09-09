@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FiPlus, FiGlobe, FiCheckCircle, FiXCircle } from 'react-icons/fi';
+import { FiPlus, FiGlobe, FiCheckCircle, FiXCircle, FiTrash2 } from 'react-icons/fi';
 
-export default function SeoServicesList({ services, onToggleActive, onCreateService }) {
+export default function SeoServicesList({ services, onToggleActive, onCreateService, onDeleteService }) {
   const [serviceName, setServiceName] = useState('');
   const [parentCategory, setParentCategory] = useState('business-registration');
   const [showAddForm, setShowAddForm] = useState(false);
@@ -106,21 +106,44 @@ export default function SeoServicesList({ services, onToggleActive, onCreateServ
                   </span>
                 </td>
                 <td style={{ textAlign: 'right' }}>
-                  <button
-                    onClick={() => onToggleActive(srv)}
-                    style={{
-                      background: srv.is_active ? '#fef2f2' : '#ecfdf5',
-                      color: srv.is_active ? '#dc2626' : '#059669',
-                      border: srv.is_active ? '1px solid #fca5a5' : '1px solid #a7f3d0',
-                      padding: '5px 12px',
-                      borderRadius: '6px',
-                      fontSize: '0.82rem',
-                      fontWeight: 600,
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {srv.is_active ? 'Deactivate' : 'Activate'}
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', alignItems: 'center' }}>
+                    <button
+                      onClick={() => onToggleActive(srv)}
+                      style={{
+                        background: srv.is_active ? '#fef2f2' : '#ecfdf5',
+                        color: srv.is_active ? '#dc2626' : '#059669',
+                        border: srv.is_active ? '1px solid #fca5a5' : '1px solid #a7f3d0',
+                        padding: '5px 12px',
+                        borderRadius: '6px',
+                        fontSize: '0.82rem',
+                        fontWeight: 600,
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {srv.is_active ? 'Deactivate' : 'Activate'}
+                    </button>
+                    {onDeleteService && (
+                      <button
+                        onClick={() => onDeleteService(srv)}
+                        title="Delete Service"
+                        style={{
+                          background: '#fef2f2',
+                          color: '#dc2626',
+                          border: '1px solid #fca5a5',
+                          padding: '5px 10px',
+                          borderRadius: '6px',
+                          fontSize: '0.82rem',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <FiTrash2 />
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}

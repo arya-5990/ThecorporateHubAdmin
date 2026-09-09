@@ -15,6 +15,7 @@ import CreatePageModal from './seo/CreatePageModal';
 import DuplicatePageModal from './seo/DuplicatePageModal';
 import SeoLocationsList from './seo/SeoLocationsList';
 import SeoServicesList from './seo/SeoServicesList';
+import ConfirmModal from './ConfirmModal';
 
 const INITIAL_LOCATIONS = [
   { id: 'loc-1', city_name: 'Ahmedabad', state_name: 'Gujarat', city_slug: 'ahmedabad', state_slug: 'gujarat', is_active: true },
@@ -107,6 +108,7 @@ export default function SeoManager({ triggerToast }) {
   const [activeEditingPage, setActiveEditingPage] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDuplicateModal, setShowDuplicateModal] = useState(null);
+  const [confirmModal, setConfirmModal] = useState({ isOpen: false, title: '', message: '', confirmText: 'Delete', type: 'danger', onConfirm: null });
 
   useEffect(() => {
     fetchSeoData();
@@ -401,20 +403,94 @@ export default function SeoManager({ triggerToast }) {
     const cityName = pageToDelete.city_name || pageToDelete.seo_locations?.city_name;
     const serviceName = pageToDelete.service_name || pageToDelete.seo_services?.service_name;
 
-    if (window.confirm(`Are you sure you want to delete ${cityName} × ${serviceName}? This will also delete associated FAQs.`)) {
-      try {
-        if (import.meta.env.VITE_SUPABASE_URL && pageToDelete.id) {
-          const { error } = await supabase.from('seo_location_pages').delete().eq('id', pageToDelete.id);
-          if (error) throw error;
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete SEO Page',
+      message: `Are you sure you want to delete the page for ${cityName} × ${serviceName}? All associated FAQs will also be permanently removed.`,
+      confirmText: 'Yes, Delete Page',
+      type: 'danger',
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        try {
+          if (import.meta.env.VITE_SUPABASE_URL && pageToDelete.id) {
+            const { error } = await supabase.from('seo_location_pages').delete().eq('id', pageToDelete.id);
+            if (error) throw error;
+          }
+          setPages(pages.filter((p) => p.id !== pageToDelete.id));
+          triggerToast("SEO page deleted successfully.", "info");
+        } catch (err) {
+          console.error("Error deleting page:", err);
+          triggerToast("Failed to delete SEO page.", "error");
         }
-
-        setPages(pages.filter((p) => p.id !== pageToDelete.id));
-        triggerToast("SEO page deleted successfully.", "info");
-      } catch (err) {
-        console.error("Error deleting page:", err);
-        triggerToast("Failed to delete SEO page.", "error");
       }
+    });
+  };
+
+  const handleToggleLocationActive = async (locToToggle) => {
+    const nextActive = !locToToggle.is_active;
+    try {
+      if (import.meta.env.VITE_SUPABASE_URL && locToToggle.id) {
+        const { error } = await supabase
+          .from('seo_locations')
+          .update({ is_active: nextActive, updated_at: new Date().toISOString() })
+          .eq('id', locToToggle.id);
+
+        if (error) throw error;
+      }
+
+      setLocations(locations.map((loc) => (loc.id === locToToggle.id || loc.city_slug === locToToggle.city_slug ? { ...loc, is_active: nextActive } : loc)));
+      triggerToast(`Location ${locToToggle.city_name} ${nextActive ? 'activated' : 'deactivated'}.`);
+    } catch (err) {
+      console.error("Error toggling location status:", err);
+      triggerToast("Failed to update location status.", "error");
     }
+  };
+
+  const handleToggleServiceActive = async (srvToToggle) => {
+    const nextActive = !srvToToggle.is_active;
+    try {
+      if (import.meta.env.VITE_SUPABASE_URL && srvToToggle.id) {
+        const { error } = await supabase
+          .from('seo_services')
+          .update({ is_active: nextActive, updated_at: new Date().toISOString() })
+          .eq('id', srvToToggle.id);
+
+        if (error) throw error;
+      }
+
+      setServices(services.map((srv) => (srv.id === srvToToggle.id || srv.service_slug === srvToToggle.service_slug ? { ...srv, is_active: nextActive } : srv)));
+      triggerToast(`Service ${srvToToggle.service_name} ${nextActive ? 'activated' : 'deactivated'}.`);
+    } catch (err) {
+      console.error("Error toggling service status:", err);
+      triggerToast("Failed to update service status.", "error");
+    }
+  };
+
+  const handleDeleteLocation = async (locToDelete) => {
+    setConfirmModal({
+      isOpen: true,
+      title: `Delete ${locToDelete.city_name}`,
+      message: `Are you sure you want to permanently remove ${locToDelete.city_name} from the target locations? Any SEO pages linked to this city will also be deleted.`,
+      confirmText: 'Yes, Delete City',
+      type: 'danger',
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        try {
+          if (import.meta.env.VITE_SUPABASE_URL && locToDelete.id) {
+            const { error } = await supabase
+              .from('seo_locations')
+              .delete()
+              .eq('id', locToDelete.id);
+            if (error) throw error;
+          }
+          setLocations(locations.filter((l) => l.id !== locToDelete.id && l.city_slug !== locToDelete.city_slug));
+          triggerToast(`Location ${locToDelete.city_name} deleted successfully.`, 'info');
+        } catch (err) {
+          console.error("Error deleting location:", err);
+          triggerToast(err.message || "Failed to delete location.", "error");
+        }
+      }
+    });
   };
 
   const handleCreateLocation = async (newLocData) => {
@@ -447,6 +523,33 @@ export default function SeoManager({ triggerToast }) {
       console.error("Error creating service:", err);
       triggerToast("Failed to add service.", "error");
     }
+  };
+
+  const handleDeleteService = async (srvToDelete) => {
+    setConfirmModal({
+      isOpen: true,
+      title: `Delete ${srvToDelete.service_name}`,
+      message: `Are you sure you want to permanently delete "${srvToDelete.service_name}"? Any SEO pages linked to this service will also be removed.`,
+      confirmText: 'Yes, Delete Service',
+      type: 'danger',
+      onConfirm: async () => {
+        setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        try {
+          if (import.meta.env.VITE_SUPABASE_URL && srvToDelete.id) {
+            const { error } = await supabase
+              .from('seo_services')
+              .delete()
+              .eq('id', srvToDelete.id);
+            if (error) throw error;
+          }
+          setServices(services.filter((s) => s.id !== srvToDelete.id && s.service_slug !== srvToDelete.service_slug));
+          triggerToast(`Service "${srvToDelete.service_name}" deleted successfully.`, 'info');
+        } catch (err) {
+          console.error("Error deleting service:", err);
+          triggerToast(err.message || "Failed to delete service.", "error");
+        }
+      }
+    });
   };
 
   const publishedCount = pages.filter((p) => p.published).length;
@@ -596,16 +699,18 @@ export default function SeoManager({ triggerToast }) {
       {subTab === 'locations' && (
         <SeoLocationsList
           locations={locations}
-          onToggleActive={(loc) => triggerToast(`Location ${loc.city_name} toggled.`)}
+          onToggleActive={handleToggleLocationActive}
           onCreateLocation={handleCreateLocation}
+          onDeleteLocation={handleDeleteLocation}
         />
       )}
 
       {subTab === 'services' && (
         <SeoServicesList
           services={services}
-          onToggleActive={(srv) => triggerToast(`Service ${srv.service_name} toggled.`)}
+          onToggleActive={handleToggleServiceActive}
           onCreateService={handleCreateService}
+          onDeleteService={handleDeleteService}
         />
       )}
 
@@ -628,6 +733,16 @@ export default function SeoManager({ triggerToast }) {
           onDuplicate={handleDuplicateSubmit}
         />
       )}
+
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        confirmText={confirmModal.confirmText}
+        type={confirmModal.type}
+        onConfirm={confirmModal.onConfirm}
+        onCancel={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
+      />
     </div>
   );
 }
