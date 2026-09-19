@@ -1,0 +1,487 @@
+// SEO Service Templates
+// Master seed templates extracted from content docs.
+// {{CITY}} and {{STATE}} placeholders are dynamically replaced.
+
+export const seoServiceTemplates = {
+  "company-registration": {
+    "service_slug": "company-registration",
+    "service_name": "Company Registration",
+    "template_name": "Private Limited Company Registration Template",
+    "h1": "Private Limited Company Registration in {{CITY}}. Build a Business That Is Ready to Grow.",
+    "meta_title": "Private Limited Company Registration in {{CITY}} | The Corporate Hub",
+    "meta_description": "A Private Limited Company is more than just a business registration. Professional private limited company registration services in {{CITY}}, {{STATE}} by The...",
+    "intro": "A Private Limited Company is more than just a business registration.\n\nIt gives your business a separate legal identity, structured ownership and a strong foundation for funding, team building and future expansion.\n\nWhether you are starting a new business, building a startup or planning to scale an existing venture, choosing the right structure from the beginning can make future growth much easier.\n\nStart Right → Build Credibility → Raise Capital → Expand",
+    "what_is_service": "A Private Limited Company is a company incorporated under the Companies Act, 2013.\n\nIt has a legal identity separate from its shareholders and operates through a structured ownership and management framework involving shareholders and directors.\n\nIt is one of the most suitable structures for entrepreneurs who want to build a scalable, professionally managed and investment-ready business.",
+    "who_should_choose": "A Private Limited Company can be suitable for:\n\nStartups\n\nTwo or more founders\n\nGrowing businesses\n\nTechnology companies\n\nE-commerce businesses\n\nManufacturing businesses\n\nBusinesses planning to raise investment\n\nBusinesses planning ESOPs\n\nCompanies dealing with corporates and institutions\n\nEntrepreneurs planning long-term expansion\n\nIf your vision is to build something bigger than a small owner-managed business, a Private Limited Company can provide the structure required for that journey.",
+    "key_benefits": "Separate Legal Identity\n\nThe company has its own legal identity separate from its shareholders.\n\nLimited Liability\n\nShareholders generally have limited liability, subject to applicable law and circumstances such as personal guarantees.\n\nStructured Ownership\n\nOwnership is represented through shares, making founder and investor ownership easier to define.\n\nFunding Friendly\n\nA Private Limited Company is generally the preferred structure for angel investors, venture capital and equity investment.\n\nESOP Opportunity\n\nEligible companies can create ESOP structures to attract and retain employees, subject to applicable law.\n\nPerpetual Succession\n\nThe company continues to exist despite changes in shareholders or directors.\n\nProfessional Business Structure\n\nA corporate structure can improve the way the business presents itself to customers, vendors, employees, lenders and investors.",
+    "eligibility": "Generally, a Private Limited Company requires:\n\nMinimum 2 Shareholders\n\nMinimum 2 Directors\n\nAt least 1 Resident Director, as required under applicable law\n\nRegistered Office in India\n\nUnique and acceptable company name\n\nDigital Signature Certificate (DSC)\n\nLawful business activity\n\nProposed share capital and shareholding structure\n\nThere is no prescribed minimum paid-up capital requirement for a normal Private Limited Company.",
+    "documents": "Directors & Shareholders\n\n[DOCUMENT LIST TO BE ADDED]\n\nRegistered Office\n\n[DOCUMENT LIST TO BE ADDED]\n\nBusiness Details\n\n[DOCUMENT LIST TO BE ADDED]",
+    "process": "We keep the incorporation process simple:\n\nBusiness Discussion\n↓\nStructure & Shareholding Planning\n↓\nName Selection\n↓\nDSC\n↓\nIncorporation Documents\n↓\nMCA Filing\n↓\nCertificate of Incorporation\n↓\nPAN & TAN\n↓\nPost-Incorporation Guidance\n\nOur approach is not only to incorporate the company, but also to help ensure that the initial structure is aligned with the founders' business plans.",
+    "timeline": "Approximately 10 Working Days*\n\nThe actual timeline depends upon:\n\nDocument Readiness | Name Availability | MCA Processing | Resubmission, if any | Regulatory Approval\n\nThe timeline is indicative and cannot be guaranteed.",
+    "tax_compliance": "A Private Limited Company is subject to corporate taxation and ongoing statutory compliance.\n\nAn eligible domestic company opting for Section 115BAA can be taxed at:\n\nIncome Tax: 22%\nSurcharge: 10%\nHealth & Education Cess: 4%\n\nThis results in an effective tax rate of approximately 25.17%, subject to prescribed conditions.\n\nOther tax regimes may apply depending upon the company's eligibility and circumstances.\n\nAfter incorporation, applicable compliances may include:\n\nAccounting | Income Tax Return | ROC Annual Filing | Statutory Audit | Board Meetings | GST | TDS | Payroll | PF/ESIC | Other Business-Specific Compliance",
+    "comparison": "*Subject to applicable law and exceptions.",
+    "how_it_helps": "This is where the real value of the structure begins.\n\nBuild Credibility\n\nOperate through a recognised corporate structure while dealing with:\n\nCustomers | Vendors | Banks | Corporates | Employees | Investors\n\nBring Co-Founders Together\n\nClearly define:\n\nShareholding | Ownership | Roles | Capital Contribution | Future Equity\n\nRaise Equity Investment\n\nA Private Limited Company can issue shares and is generally better suited for:\n\nAngel Investment → Venture Capital → Strategic Investors\n\nsubject to applicable corporate, securities, FEMA and other laws.\n\nBuild Your Team\n\nAs the business grows, ESOPs can be considered to attract and retain key employees.\n\nExpand Your Business\n\nA structured company can support:\n\nNew Products → New Locations → Larger Contracts → New Investors → Bigger Operations\n\nBuild for the Future\n\nYour journey can evolve from:\n\nIdea → Company → Team → Revenue → Funding → Expansion\n\nA Private Limited Company does not guarantee growth or funding, but it creates a structure capable of supporting them.",
+    "local_information": "The Corporate Hub assists entrepreneurs and businesses in {{CITY}}, {{STATE}} with Private Limited Company Registration.\n\nThe Corporate Hub assists entrepreneurs and businesses across Gujarat and India with company incorporation and ongoing business support.\n\nWhether the founders are based in:\n\nAhmedabad | Surat | Vadodara | Rajkot | Gandhinagar | Other Parts of Gujarat | Anywhere in India\n\nmuch of the company incorporation process is handled digitally through the MCA framework.\n\nOur support can continue beyond registration through accounting, taxation, compliance, licences and business advisory.",
+    "why_corporate_hub": "We Don't Just Register Your Company. We Help Structure Your Business.\n\nBefore incorporation, we look at factors such as:\n\nFounder Structure\nShareholding\nBusiness Activity\nTaxation\nFuture Funding\nLicences & Registrations\nCompliance Requirements\nGrowth Plans\n\nAnd after incorporation, our team can assist with:\n\nAccounting | GST | Income Tax | ROC Compliance | Trademark | Business Licences | Funding Support | Financial Management\n\nSo you don't have to find a different consultant every time your company enters its next stage.",
+    "why_choose_service": "At The Corporate Hub, we assist clients in {{CITY}} with comprehensive private limited company registration and ongoing advisory.",
+    "related_services": "You may also need:\n\nTrademark Registration\nGST Registration\nStartup India Recognition\nAccounting & Bookkeeping\nROC Compliance\nBusiness Licences\nIEC & Export Setup\nFunding & Business Advisory",
+    "call_to_action": "Don't choose a business structure only because someone told you:\n\n“Private Limited is best.”\n\nChoose it because it fits where you want your business to go.\n\nAt The Corporate Hub, we help you understand, structure, register and manage your company as it grows.\n\nBuild the Business. Protect the Brand. Stay Compliant. Grow with Confidence.\n\nTHE CORPORATE HUB\nStartup & Business Consultants | Gujarat • Pan India",
+    "pricing": "Contact our team for a transparent, customised quote based on your specific requirements.",
+    "og_image": "/logo.png",
+    "faqs": [
+      {
+        "question": "How many people are required to start a Private Limited Company?",
+        "answer": "Generally, a minimum of two members/shareholders and two directors are required. The same individuals can act as both shareholders and directors, subject to applicable law.",
+        "sort_order": 1,
+        "is_active": true
+      },
+      {
+        "question": "Is there any minimum capital requirement?",
+        "answer": "There is no prescribed minimum paid-up capital requirement for incorporating a normal Private Limited Company.",
+        "sort_order": 2,
+        "is_active": true
+      },
+      {
+        "question": "Can I register a company from anywhere in India?",
+        "answer": "Yes. The MCA incorporation process is largely digital, although the company must have a registered office in India and comply with applicable requirements.",
+        "sort_order": 3,
+        "is_active": true
+      },
+      {
+        "question": "How long does company registration take?",
+        "answer": "We generally estimate approximately 10 working days, subject to name approval, documents, MCA processing and any resubmission.",
+        "sort_order": 4,
+        "is_active": true
+      },
+      {
+        "question": "Is a Private Limited Company better than an LLP?",
+        "answer": "It depends on your plans. A Private Limited Company is generally more suitable for equity funding, multiple shareholders and scalable startup structures, whereas an LLP can be suitable for partner-driven professional and service businesses.",
+        "sort_order": 5,
+        "is_active": true
+      },
+      {
+        "question": "Can a Private Limited Company raise investment?",
+        "answer": "Yes. Subject to applicable laws and procedures, a Private Limited Company can issue shares and raise equity capital from eligible investors.",
+        "sort_order": 6,
+        "is_active": true
+      },
+      {
+        "question": "Can a Private Limited Company give ESOPs?",
+        "answer": "Yes, ESOPs can be structured subject to the Companies Act and other applicable requirements.",
+        "sort_order": 7,
+        "is_active": true
+      },
+      {
+        "question": "Is audit compulsory for a Private Limited Company?",
+        "answer": "A company is generally required to have its financial statements audited under the Companies Act, irrespective of whether it has significant turnover or profit.",
+        "sort_order": 8,
+        "is_active": true
+      },
+      {
+        "question": "Is GST automatically included with company registration?",
+        "answer": "No. GST registration is separate and its requirement depends on the nature of business, turnover and other applicable GST provisions.",
+        "sort_order": 9,
+        "is_active": true
+      },
+      {
+        "question": "Can The Corporate Hub handle compliance after registration?",
+        "answer": "Yes. We can assist with applicable accounting, GST, income tax, ROC, payroll and other business compliance requirements.",
+        "sort_order": 10,
+        "is_active": true
+      }
+    ]
+  },
+  "llp": {
+    "service_slug": "llp",
+    "service_name": "LLP Registration",
+    "template_name": "Limited Liability Partnership (LLP) Registration Template",
+    "h1": "Limited Liability Partnership (LLP) Registration in {{CITY}}. Grow Together. Keep Ownership Flexible.",
+    "meta_title": "Limited Liability Partnership (LLP) Registration in {{CITY}} | The Corporate Hub",
+    "meta_description": "Want to start a business with partners but don't necessarily need the share-based structure of a Private Limited Company? Professional limited liability part...",
+    "intro": "Want to start a business with partners but don't necessarily need the share-based structure of a Private Limited Company?\n\nA Limited Liability Partnership (LLP) combines the flexibility of a partnership with a separate legal identity and limited liability structure.\n\nIt can be particularly suitable for consultants, professionals, agencies, service businesses and closely held businesses where the founders want to operate and grow together as partners.\n\nPartners → Professional Structure → Flexible Management → Growth",
+    "what_is_service": "A Limited Liability Partnership is a separate legal entity registered under the Limited Liability Partnership Act, 2008.\n\nInstead of shareholders and directors, an LLP operates through Partners and Designated Partners.\n\nThe rights, responsibilities, contribution, profit-sharing and management arrangement between partners are primarily structured through the LLP Agreement, subject to applicable law.",
+    "who_should_choose": "An LLP can be suitable for:\n\nConsultants & advisory businesses\n\nProfessional service firms\n\nIT & technology service providers\n\nDigital & creative agencies\n\nArchitects and designers\n\nFamily or closely held businesses\n\nTwo or more entrepreneurs starting together\n\nBusinesses where partners actively manage operations\n\nBusinesses not presently focused on raising conventional equity investment\n\nFor regulated professions, the applicable professional laws and regulations should also be considered before selecting the entity structure.",
+    "key_benefits": "Separate Legal Identity\n\nThe LLP has a legal identity separate from its partners.\n\nLimited Liability\n\nPartners generally enjoy limited liability, subject to the LLP Act and exceptions such as fraud, wrongful acts and personal guarantees.\n\nFlexible Partnership Structure\n\nThe LLP Agreement can define:\n\nContribution | Profit Sharing | Remuneration | Responsibilities | Decision-Making | Admission & Retirement of Partners\n\nNo Conventional Share Capital\n\nAn LLP works through partner contributions and partnership rights rather than company share capital.\n\nPerpetual Succession\n\nThe LLP can continue despite changes in its partners, subject to applicable law.\n\nComparatively Flexible Management\n\nAn LLP generally has a simpler internal governance framework than a Private Limited Company.",
+    "eligibility": "Generally, LLP registration requires:\n\nMinimum 2 Partners\n\nMinimum 2 Designated Partners\n\nAt least 1 Designated Partner resident in India, as required under applicable law\n\nRegistered Office in India\n\nUnique and acceptable LLP name\n\nDigital Signature Certificate (DSC)\n\nLawful business activity\n\nAgreed capital contribution\n\nAgreed profit-sharing ratio\n\nThere is generally no prescribed minimum capital contribution for forming an LLP.",
+    "documents": "Partners / Designated Partners\n\n[DOCUMENT LIST TO BE ADDED]\n\nRegistered Office\n\n[DOCUMENT LIST TO BE ADDED]\n\nBusiness & Partnership Details\n\n[DOCUMENT LIST TO BE ADDED]",
+    "process": "Our process generally includes:\n\nBusiness & Partner Discussion\n↓\nContribution & Profit-Sharing Planning\n↓\nName Selection\n↓\nDSC\n↓\nLLP Incorporation Filing\n↓\nCertificate of Incorporation\n↓\nLLP Agreement\n↓\nStatutory Filing of LLP Agreement\n↓\nPost-Incorporation Guidance\n\nA properly structured LLP Agreement is important because it defines how the partners will operate the business together.",
+    "timeline": "Approximately 10 Working Days*\n\nThe timeline depends upon:\n\nDocument Readiness | Name Availability | MCA Processing | Execution of LLP Agreement | Resubmission, if any\n\nThe timeline is indicative and may vary depending upon regulatory processing.",
+    "tax_compliance": "An LLP is generally taxed as a partnership firm under the Income-tax Act.\n\nIncome Tax Rate\n\n30% + applicable surcharge + 4% Health & Education Cess\n\nWhere surcharge does not apply, the effective rate is generally 31.20%.\n\nOther provisions, including Alternate Minimum Tax (AMT), may apply depending upon the LLP's circumstances.\n\nTDS on Payments to Partners – Section 194T\n\nFrom 1 April 2025, Section 194T provides for TDS at 10% on specified payments such as salary, remuneration, commission, bonus or interest made/credited by a firm/LLP to a partner where the prescribed threshold and conditions are satisfied.\n\nOngoing Compliance\n\nDepending upon applicability, an LLP may need:\n\nAccounting | Income Tax Return | LLP Annual Return | Statement of Account & Solvency | GST | TDS | Partner TDS | Audit | Other Business-Specific Compliance",
+    "comparison": "*Subject to applicable law and exceptions.",
+    "how_it_helps": "Grow Without Conventional Equity Dilution\n\nAn LLP does not operate through share capital.\n\nPartners can structure their contribution and economic rights through the LLP Agreement, allowing founders to build the business through a partnership model.\n\nBuild a Professional Business Identity\n\nMove from an informal partnership to a separate registered business entity.\n\nAdd Partners as You Expand\n\nNew partners can be introduced as the business grows, subject to the LLP Agreement and applicable filings.\n\nThis can help bring in:\n\nExpertise | Management | Capital | Business Relationships\n\nKeep Profit Sharing Flexible\n\nPartners can structure their economic arrangement through the LLP Agreement, subject to tax and other applicable laws.\n\nScale with Comparatively Simple Governance\n\nFor many closely held service businesses:\n\n2 Partners → Team → Clients → New Partners → Multiple Locations\n\nAn LLP can provide a formal structure without necessarily requiring the complete shareholder and board framework of a company.",
+    "local_information": "The Corporate Hub assists entrepreneurs and businesses in {{CITY}}, {{STATE}} with Limited Liability Partnership (LLP) Registration.\n\nThe Corporate Hub assists entrepreneurs with LLP Registration across Gujarat and India.\n\nWe can assist businesses in:\n\nAhmedabad | Surat | Vadodara | Rajkot | Gandhinagar | Other Gujarat Cities | Pan India\n\nSince the MCA incorporation process is substantially digital, founders do not necessarily need to be physically located in Ahmedabad to work with our team.\n\nWe can also continue to manage applicable accounting, taxation and compliance after registration.",
+    "why_corporate_hub": "We Don't Just Register the LLP. We Structure the Partnership.\n\nAn LLP works well only when the relationship between the partners is properly planned.\n\nBefore registration, we help you consider:\n\nPartner Roles\nCapital Contribution\nProfit Sharing\nRemuneration\nDecision-Making\nTax Implications\nFuture Partner Entry\nBusiness Licences\nOngoing Compliance\n\nOur team can then support the LLP with:\n\nAccounting | GST | Income Tax | TDS | LLP Compliance | Trademark | Licences | Financial Management\n\nSo your LLP remains structured as the business grows.",
+    "why_choose_service": "At The Corporate Hub, we assist clients in {{CITY}} with comprehensive limited liability partnership (llp) registration and ongoing advisory.",
+    "related_services": "Businesses considering an LLP may also require:\n\nPrivate Limited Company Registration\nOPC Registration\nGST Registration\nTrademark Registration\nStartup India Recognition\nAccounting & Bookkeeping\nLLP Annual Compliance\nBusiness Licences",
+    "call_to_action": "An LLP should not be selected simply because:\n\n“Compliance is lower.”\n\nIt should be selected when its partner-driven ownership, taxation, management flexibility and future growth model fit your business.\n\nAt The Corporate Hub, we help you decide whether:\n\nLLP or Private Limited Company\n\nis the better structure for where you want your business to go.\n\nBuild Together. Structure It Right. Grow with Confidence.\n\nTHE CORPORATE HUB\nStartup & Business Consultants | Gujarat • Pan India",
+    "pricing": "Contact our team for a transparent, customised quote based on your specific requirements.",
+    "og_image": "/logo.png",
+    "faqs": [
+      {
+        "question": "What is the minimum number of partners required for an LLP?",
+        "answer": "An LLP requires a minimum of two partners and at least two designated partners.",
+        "sort_order": 1,
+        "is_active": true
+      },
+      {
+        "question": "Is there any minimum capital required?",
+        "answer": "There is generally no prescribed minimum capital contribution for incorporating an LLP.",
+        "sort_order": 2,
+        "is_active": true
+      },
+      {
+        "question": "Is an LLP a separate legal entity?",
+        "answer": "Yes. An LLP has a separate legal identity from its partners.",
+        "sort_order": 3,
+        "is_active": true
+      },
+      {
+        "question": "Is LLP better than a Private Limited Company?",
+        "answer": "Neither structure is universally better. An LLP can be more suitable for partner-driven professional and service businesses, while a Private Limited Company is generally better suited for businesses planning equity investment, ESOPs and wider share ownership.",
+        "sort_order": 4,
+        "is_active": true
+      },
+      {
+        "question": "Can an LLP raise investment?",
+        "answer": "Partners can introduce capital and new partners may be admitted subject to applicable law and the LLP Agreement. However, an LLP does not issue equity shares like a Private Limited Company, making it less suitable for conventional VC/angel equity funding.",
+        "sort_order": 5,
+        "is_active": true
+      },
+      {
+        "question": "How are profits shared in an LLP?",
+        "answer": "Profit-sharing arrangements are generally specified in the LLP Agreement.",
+        "sort_order": 6,
+        "is_active": true
+      },
+      {
+        "question": "Can partners take remuneration from an LLP?",
+        "answer": "Yes, subject to the LLP Agreement and applicable provisions of the Income-tax Act. Tax deductibility and TDS implications should be evaluated separately.",
+        "sort_order": 7,
+        "is_active": true
+      },
+      {
+        "question": "Is audit compulsory for every LLP?",
+        "answer": "No. Statutory audit requirements for an LLP depend upon prescribed thresholds and applicable law.",
+        "sort_order": 8,
+        "is_active": true
+      },
+      {
+        "question": "Can an LLP be registered from anywhere in India?",
+        "answer": "Yes. The registration process is largely digital, provided the LLP has a registered office in India and fulfils applicable requirements.",
+        "sort_order": 9,
+        "is_active": true
+      },
+      {
+        "question": "Can The Corporate Hub handle LLP compliance after registration?",
+        "answer": "Yes. We can assist with LLP filings, accounting, GST, income tax, TDS and other applicable business compliances.",
+        "sort_order": 10,
+        "is_active": true
+      }
+    ]
+  },
+  "opc": {
+    "service_slug": "opc",
+    "service_name": "One Person Company Registration",
+    "template_name": "One Person Company (OPC) Registration Template",
+    "h1": "One Person Company (OPC) Registration in {{CITY}}. Start Alone. Build Like a Company.",
+    "meta_title": "One Person Company (OPC) Registration in {{CITY}} | The Corporate Hub",
+    "meta_description": "Want to own 100% of your business but still operate through a structured company? Professional one person company (opc) registration services in {{CITY}}, {{...",
+    "intro": "Want to own 100% of your business but still operate through a structured company?\n\nA One Person Company (OPC) allows a single entrepreneur to start a company with one member/shareholder, while creating a legal identity separate from the individual owner.\n\nIt can be an ideal step for entrepreneurs who have outgrown the idea of a simple proprietorship but are not yet ready to bring in another shareholder.\n\nOne Founder → One Company → Professional Identity → Future Growth",
+    "what_is_service": "A One Person Company (OPC) is a company incorporated under the Companies Act, 2013 with only one member/shareholder.\n\nUnlike a proprietorship, an OPC has a separate legal identity from its owner.\n\nThe OPC can have its own:\n\nPAN | Bank Account | Assets | Contracts | Applicable Business Registrations & Licences\n\nThis creates a clearer distinction between:\n\nYou as an Individual\n\nand\n\nYour Business as a Company",
+    "who_should_choose": "An OPC can be suitable for:\n\nSolo entrepreneurs\n\nIndividual consultants\n\nOnline & e-commerce entrepreneurs\n\nSmall manufacturers\n\nIndividual service providers\n\nBusiness owners moving from proprietorship\n\nFounders who want 100% ownership initially\n\nEntrepreneurs planning to build a corporate identity\n\nSolo founders who may convert into a Private Limited Company as they expand\n\nIt is particularly useful when you want to start alone today but keep the possibility of a larger company tomorrow.",
+    "key_benefits": "100% Single-Member Ownership\n\nYou can start the company without bringing in another shareholder merely for the purpose of having a second owner.\n\nSeparate Legal Identity\n\nThe OPC is legally separate from its member.\n\nSeparate PAN\n\nUnlike a proprietorship, where the proprietor's PAN is used for income-tax purposes, an OPC receives its own PAN as a company.\n\nLimited Liability\n\nThe member generally enjoys limited liability, subject to applicable law, fraud, personal guarantees and other exceptions.\n\nCorporate Identity\n\nOperate through a registered company structure while dealing with customers, vendors, banks and institutions.\n\nPerpetual Succession\n\nThe nominee mechanism provides continuity in prescribed circumstances.\n\nFuture Conversion\n\nAs your ownership requirements change, an OPC can be converted into another form of company, including a Private Limited Company, in accordance with applicable law.",
+    "eligibility": "Generally, an OPC requires:\n\n1 Member / Shareholder\n\nMinimum 1 Director\n\n1 Nominee\n\nRegistered Office in India\n\nUnique and acceptable company name\n\nDigital Signature Certificate (DSC)\n\nLawful business activity\n\nProposed share capital\n\nThe eligibility of the member and nominee is subject to the applicable Companies Act and Rules.\n\nThere is no prescribed minimum paid-up capital requirement for a normal OPC.",
+    "documents": "Member / Director\n\n[DOCUMENT LIST TO BE ADDED]\n\nNominee\n\n[DOCUMENT LIST TO BE ADDED]\n\nRegistered Office\n\n[DOCUMENT LIST TO BE ADDED]\n\nBusiness Details\n\n[DOCUMENT LIST TO BE ADDED]",
+    "process": "The process generally includes:\n\nBusiness Discussion\n↓\nOPC Structure Planning\n↓\nNominee Selection\n↓\nName Selection\n↓\nDSC\n↓\nIncorporation Documentation\n↓\nMCA Filing\n↓\nCertificate of Incorporation\n↓\nPAN & TAN\n↓\nPost-Incorporation Setup\n\nOur focus is to ensure that an OPC actually suits your business before simply incorporating it.",
+    "timeline": "Approximately 10 Working Days*\n\nThe actual timeline depends upon:\n\nDocument Readiness | Name Availability | MCA Processing | Nominee Documentation | Resubmission, if any\n\nThe timeline is indicative and subject to regulatory processing.",
+    "tax_compliance": "An OPC is a company for income-tax purposes and is generally subject to corporate taxation.\n\nAn eligible domestic company opting for Section 115BAA, subject to prescribed conditions, can be taxed at:\n\nIncome Tax: 22%\nSurcharge: 10%\nHealth & Education Cess: 4%\n\nEffective Tax Rate: approximately 25.17%\n\nOther corporate tax regimes may apply depending upon eligibility and circumstances.\n\nAn OPC may also have ongoing requirements relating to:\n\nAccounting | Statutory Audit | Income Tax Return | ROC Filing | GST | TDS | Payroll | Other Applicable Business Compliance\n\nCertain compliance relaxations are available to OPCs under the Companies Act compared with other companies, subject to applicable provisions.",
+    "comparison": "*Subject to applicable law and exceptions.",
+    "how_it_helps": "Move Beyond Proprietorship\n\nA proprietorship does not create a separate legal person from the proprietor.\n\nAn OPC does.\n\nThis can help create a stronger distinction between your personal identity and business identity.\n\nBuild a Corporate Brand\n\nOperate contracts, banking and applicable business registrations through a company structure.\n\nStay the Sole Owner\n\nBuild your business without giving up ownership simply because you want a corporate structure.\n\nBuild a Team Around the Company\n\nYour company can grow through:\n\nEmployees | Vendors | Customers | Professionals | Business Partners\n\nwithout requiring them to become shareholders.\n\nConvert When You're Ready\n\nWhen you eventually want additional shareholders or equity investors, you can consider conversion into a Private Limited Company in accordance with applicable law.\n\nYour Growth Journey Can Be:\n\nIndividual → OPC → Brand → Team → Private Limited → Investors → Expansion\n\nAn OPC does not itself guarantee growth, but it gives a solo founder a corporate platform from which to build.",
+    "local_information": "The Corporate Hub assists entrepreneurs and businesses in {{CITY}}, {{STATE}} with One Person Company (OPC) Registration.\n\nThe Corporate Hub assists entrepreneurs with OPC Registration across Gujarat and India.\n\nWe can support founders in:\n\nAhmedabad | Surat | Vadodara | Rajkot | Gandhinagar | Other Gujarat Cities | Pan India\n\nThe MCA incorporation process is substantially digital, so founders can work with our team remotely while maintaining a registered office in India as required.",
+    "why_corporate_hub": "Don't Choose Between OPC and Proprietorship Just Because of Registration Cost.\n\nWe first understand:\n\nWhat is your business?\nHow much do you expect it to grow?\nDo you need limited liability?\nWill you add a co-founder later?\nDo you plan to raise investment?\nWhat licences will your business require?\nWhat will be the tax and compliance impact?\n\nThen we help you decide whether:\n\nProprietorship → OPC → Private Limited\n\nis the right path.\n\nAfter incorporation, our team can also assist with:\n\nAccounting | GST | Income Tax | ROC Compliance | Trademark | Licences | Financial Management",
+    "why_choose_service": "At The Corporate Hub, we assist clients in {{CITY}} with comprehensive one person company (opc) registration and ongoing advisory.",
+    "related_services": "You may also consider:\n\nPrivate Limited Company Registration\nLLP Registration\nGST Registration\nTrademark Registration\nStartup India Recognition\nFSSAI Registration\nIEC & Export Setup\nAccounting & Tax Compliance",
+    "call_to_action": "If you are a solo entrepreneur, don't automatically assume:\n\n“One Owner = Proprietorship.”\n\nYou can also build through a separate company structure.\n\nAt The Corporate Hub, we help you compare the legal, tax, compliance and growth impact before choosing your entity.\n\nStart Solo. Build Corporate. Grow Bigger.\n\nTHE CORPORATE HUB\nStartup & Business Consultants | Gujarat • Pan India",
+    "pricing": "Contact our team for a transparent, customised quote based on your specific requirements.",
+    "og_image": "/logo.png",
+    "faqs": [
+      {
+        "question": "Can one person start a company in India?",
+        "answer": "Yes. An eligible individual can incorporate an OPC subject to the requirements of the Companies Act and applicable Rules.",
+        "sort_order": 1,
+        "is_active": true
+      },
+      {
+        "question": "Is OPC different from a proprietorship?",
+        "answer": "Yes. A proprietorship does not create a separate legal person from the proprietor. An OPC is a separate company incorporated under the Companies Act.",
+        "sort_order": 2,
+        "is_active": true
+      },
+      {
+        "question": "Does an OPC get a separate PAN?",
+        "answer": "Yes. An OPC receives a PAN in the company's name, whereas a proprietorship generally uses the proprietor's PAN for income-tax purposes.",
+        "sort_order": 3,
+        "is_active": true
+      },
+      {
+        "question": "Can licences be obtained in the OPC's name?",
+        "answer": "Applicable registrations and licences such as GST, FSSAI, IEC and other business-specific registrations may be obtained in the company's name where the relevant law permits or requires them.\n\nThe type of licence—for example, Basic, State or Central FSSAI—depends upon the applicable eligibility criteria and not merely on being an OPC.",
+        "sort_order": 4,
+        "is_active": true
+      },
+      {
+        "question": "Is a nominee compulsory for an OPC?",
+        "answer": "Yes. A nominee is required as part of the OPC framework, subject to applicable provisions.",
+        "sort_order": 5,
+        "is_active": true
+      },
+      {
+        "question": "Can an OPC have employees?",
+        "answer": "Yes. Having only one member does not mean the company can have only one person working in the business. An OPC can employ people subject to applicable labour and other laws.",
+        "sort_order": 6,
+        "is_active": true
+      },
+      {
+        "question": "Can an OPC raise investment?",
+        "answer": "An OPC is built around a single-member structure. If additional equity shareholders or conventional equity investment are required, conversion into an appropriate company structure may be necessary.",
+        "sort_order": 7,
+        "is_active": true
+      },
+      {
+        "question": "Can an OPC be converted into a Private Limited Company?",
+        "answer": "Yes, conversion is possible in accordance with the Companies Act and applicable Rules.",
+        "sort_order": 8,
+        "is_active": true
+      },
+      {
+        "question": "Is statutory audit compulsory for an OPC?",
+        "answer": "As a company, an OPC is generally required to have its financial statements audited under the Companies Act, subject to applicable provisions.",
+        "sort_order": 9,
+        "is_active": true
+      },
+      {
+        "question": "Should I choose OPC or proprietorship?",
+        "answer": "Choose based on your business size, risk, taxation, compliance requirements and future growth plan. Proprietorship offers simplicity, while OPC provides a separate corporate identity and limited liability structure.",
+        "sort_order": 10,
+        "is_active": true
+      }
+    ]
+  },
+  "section-8-company": {
+    "service_slug": "section-8-company",
+    "service_name": "Section 8 Company Registration",
+    "template_name": "Section 8 Company Registration Template",
+    "h1": "Section 8 Company Registration in {{CITY}}. Build an NGO with a Strong Corporate Structure.",
+    "meta_title": "Section 8 Company Registration in {{CITY}} | The Corporate Hub",
+    "meta_description": "If you want to start an NGO for charitable, educational, social, environmental, healthcare, research or community-focused activities, a Section 8 Company can...",
+    "intro": "If you want to start an NGO for charitable, educational, social, environmental, healthcare, research or community-focused activities, a Section 8 Company can provide a highly structured non-profit framework.\n\nUnlike a simple trust structure, a Section 8 Company operates under the Companies Act, 2013, with defined governance through members, directors and MCA compliance.\n\nIt is suitable for organisations that want to build:\n\nCredibility → Governance → Donations → CSR Opportunities → Long-Term Impact",
+    "what_is_service": "A Section 8 Company is a non-profit company incorporated under Section 8 of the Companies Act, 2013.\n\nIt is formed for objects such as:\n\nEducation | Charity | Social Welfare | Research | Environment | Healthcare | Sports | Art | Science | Community Development\n\nIts profits or income are applied towards its stated objectives rather than being distributed as dividend to members.\n\nA Section 8 Company combines:\n\nNon-Profit Purpose + Corporate Structure",
+    "who_should_choose": "It can be suitable for:\n\nNGOs\n\nCharitable organisations\n\nEducational organisations\n\nSocial welfare organisations\n\nHealthcare initiatives\n\nEnvironmental organisations\n\nResearch organisations\n\nSkill-development initiatives\n\nCommunity-development organisations\n\nFoundations\n\nOrganisations planning CSR projects\n\nNGOs planning institutional funding or grants\n\nFounders who want a professionally governed non-profit structure",
+    "key_benefits": "Separate Legal Identity\n\nThe company has its own legal identity separate from its members.\n\nStructured Governance\n\nThe organisation operates through:\n\nMembers | Directors | Memorandum | Articles | Statutory Records\n\nProfessional NGO Structure\n\nA Section 8 Company provides a formal corporate framework that can be useful when dealing with:\n\nCorporates | Donors | Institutions | Government Bodies | Grant Agencies\n\n12A / 12AB Eligibility\n\nAn eligible Section 8 Company can separately apply for income-tax registration commonly referred to as 12A / 12AB.\n\n80G Eligibility\n\nIt can also separately apply for 80G approval, subject to Income-tax requirements.\n\nCSR Opportunity\n\nAn eligible Section 8 Company can act as a CSR implementing agency subject to the applicable CSR Rules and required registrations. MCA's CSR guidance confirms that Section 8 companies can be eligible implementing agencies, with 12A and 80G generally required for non-government entities and CSR-1 registration also relevant.\n\nLong-Term Continuity\n\nThe organisation can continue despite changes in members or directors, subject to applicable law.",
+    "eligibility": "Generally, for a private Section 8 Company:\n\nMinimum 2 Members\n\nMinimum 2 Directors\n\nAt least 1 Resident Director, as applicable\n\nRegistered Office in India\n\nGenuine non-profit / charitable objects\n\nDigital Signature Certificates\n\nProposed Section 8 compliant name\n\nMemorandum & Articles aligned with charitable objects\n\nNo distribution of dividend to members\n\nThe proposed objects and activities should clearly support the organisation's non-profit purpose.",
+    "documents": "Directors & Members\n\n[DOCUMENT LIST TO BE ADDED]\n\nRegistered Office\n\n[DOCUMENT LIST TO BE ADDED]\n\nProposed NGO Activities\n\n[DOCUMENT LIST TO BE ADDED]\n\nObjects & Project Details\n\n[DOCUMENT LIST TO BE ADDED]",
+    "process": "The process generally includes:\n\nDiscussion of NGO Activities\n↓\nObject & Structure Planning\n↓\nName Selection\n↓\nDSC\n↓\nMOA & AOA Preparation\n↓\nSection 8 Incorporation Filing\n↓\nMCA Review / Approval\n↓\nCertificate of Incorporation\n↓\nPAN & TAN\n↓\nPost-Incorporation Registrations\n\nAfter incorporation, depending upon the organisation's plans, the next stage may include:\n\n12A / 12AB → 80G → CSR-1 → Other Applicable Registrations",
+    "timeline": "Approximately 20 Working Days*\n\nThe actual timeline depends upon:\n\nDocument Readiness | Name Approval | Object Scrutiny | MCA Processing | Resubmission, if any\n\nThe timeline is indicative and may vary depending upon regulatory approval.",
+    "tax_compliance": "Section 8 incorporation and income-tax exemption are not the same thing.\n\nA Section 8 Company may separately need to apply for appropriate registration under the Income-tax framework for claiming charitable tax exemption.\n\n12A / 12AB\n\nThis is generally relevant for obtaining income-tax exemption for eligible charitable income, subject to approval and ongoing conditions.\n\n80G\n\n80G approval enables eligible donors to claim deduction on qualifying donations, subject to applicable provisions. The Income Tax Department notes that deductions under Section 80G depend on the category of the eligible fund/institution and applicable limits.\n\nOther Ongoing Compliance\n\nDepending upon applicability:\n\nAccounting | Statutory Audit | Income Tax Return | ROC Annual Filing | Board Meetings | Donation Records | 12AB Compliance | 80G Compliance | TDS | GST | CSR Reporting Support",
+    "comparison": "Important\n\nA Trust is not inferior and a Section 8 Company is not automatically better in every case.\n\nThe right structure depends upon:\n\nNature of Activity | Governance Style | Funding Plans | CSR Plans | Number of Founders | Long-Term Vision",
+    "how_it_helps": "Build Institutional Credibility\n\nA structured corporate non-profit framework can make it easier to present your organisation professionally to:\n\nDonors | Corporates | Institutions | Government Bodies\n\nBecome Donation Ready\n\nAfter obtaining applicable 12A / 12AB and 80G approvals, the organisation can build a more structured donation framework.\n\nBecome CSR Ready\n\nAn eligible Section 8 Company can work towards becoming a CSR implementing agency.\n\nFor many non-government entities, this generally involves:\n\nSection 8 → 12A / 12AB → 80G → CSR-1 → Track Record / Eligibility as applicable\n\nMCA's current CSR guidance confirms the importance of 12A, 80G and CSR-1 for eligible implementing agencies.\n\nAccess Grants & Institutional Opportunities\n\nAs compliance, governance and track record improve, the organisation can explore:\n\nDonations | CSR Projects | Institutional Grants | Government Schemes | Eligible Foreign Contributions\n\nForeign contribution requires separate FCRA compliance and is not automatically available because of Section 8 incorporation.\n\nBuild for Long-Term Impact\n\nYour journey can evolve from:\n\nSocial Idea → Section 8 Company → 12AB / 80G → Donors → CSR → Larger Impact",
+    "local_information": "The Corporate Hub assists entrepreneurs and businesses in {{CITY}}, {{STATE}} with Section 8 Company Registration.\n\nThe Corporate Hub assists with Section 8 Company registration and related NGO compliance across:\n\nAhmedabad | Surat | Vadodara | Rajkot | Gandhinagar | Gujarat | Pan India\n\nSince MCA incorporation is substantially digital, NGOs and founders across India can work with our team remotely.\n\nWe can also assist after incorporation with:\n\n12A / 12AB | 80G | CSR-1 | Accounting | ROC Compliance | Taxation | NGO Advisory",
+    "why_corporate_hub": "We Don't Just Register an NGO.\n\nWe help you plan the complete structure around it.\n\nBefore incorporation, we consider:\n\nObjects\nType of NGO Structure\nTrust vs Section 8\nFuture Donations\n12A / 12AB\n80G\nCSR Plans\nGovernance\nAccounting & Compliance\n\nAnd after incorporation, we can assist with:\n\n12A / 12AB | 80G | CSR-1 | Accounting | Audit Support | Income Tax | ROC Compliance | NGO Documentation\n\nOur focus is to help you build an organisation that is not only registered, but structured for long-term credibility and impact.",
+    "why_choose_service": "At The Corporate Hub, we assist clients in {{CITY}} with comprehensive section 8 company registration and ongoing advisory.",
+    "related_services": "You may also need:\n\nTrust Registration\n12A / 12AB Registration\n80G Registration\nCSR-1 Registration\nNGO Darpan Registration\nAccounting & Bookkeeping\nROC Compliance\nTrademark Registration\nFCRA Advisory",
+    "call_to_action": "Don't choose a structure simply because:\n\n“Trust registration is easier.”\n\nChoose based on where you want your organisation to go.\n\nIf your vision includes:\n\nProfessional Governance | Institutional Donations | CSR Projects | Long-Term Expansion\n\na Section 8 Company may provide a stronger framework.\n\nDon't Just Register an NGO. Build an Institution.\n\nTHE CORPORATE HUB\nStartup & Business Consultants | Gujarat • Pan India",
+    "pricing": "Contact our team for a transparent, customised quote based on your specific requirements.",
+    "og_image": "/logo.png",
+    "faqs": [
+      {
+        "question": "What is a Section 8 Company?",
+        "answer": "It is a non-profit company incorporated under the Companies Act, 2013 for charitable or socially beneficial objectives.",
+        "sort_order": 1,
+        "is_active": true
+      },
+      {
+        "question": "Can a Section 8 Company make profit?",
+        "answer": "It may generate income or surplus, but the profits are required to be applied towards its stated objects and cannot be distributed as dividend to members.",
+        "sort_order": 2,
+        "is_active": true
+      },
+      {
+        "question": "Is 12A / 12AB automatic with Section 8 registration?",
+        "answer": "No. It requires a separate application and approval under the Income-tax framework.",
+        "sort_order": 3,
+        "is_active": true
+      },
+      {
+        "question": "Is 80G automatically available?",
+        "answer": "No. 80G is a separate approval and is subject to eligibility and applicable conditions.",
+        "sort_order": 4,
+        "is_active": true
+      },
+      {
+        "question": "Can a Section 8 Company receive CSR funds?",
+        "answer": "It can be eligible to act as a CSR implementing agency subject to the Companies (CSR Policy) Rules, required registrations and other applicable conditions.",
+        "sort_order": 5,
+        "is_active": true
+      },
+      {
+        "question": "Is Section 8 better than a Trust?",
+        "answer": "Not always. Section 8 offers a structured corporate framework, while a trust can be simpler and more appropriate for certain charitable activities.",
+        "sort_order": 6,
+        "is_active": true
+      },
+      {
+        "question": "Can a Section 8 Company receive foreign donations?",
+        "answer": "Only subject to applicable FCRA registration or prior permission and related compliance. Section 8 registration alone does not permit unrestricted foreign contributions.",
+        "sort_order": 7,
+        "is_active": true
+      },
+      {
+        "question": "How long does registration take?",
+        "answer": "We generally estimate approximately 20 working days, subject to MCA processing and document readiness.",
+        "sort_order": 8,
+        "is_active": true
+      },
+      {
+        "question": "Can a Section 8 Company operate across India?",
+        "answer": "Yes. Subject to its objects, licences and applicable laws, it can undertake activities across India.",
+        "sort_order": 9,
+        "is_active": true
+      },
+      {
+        "question": "Can The Corporate Hub handle compliance after incorporation?",
+        "answer": "Yes. We can assist with 12A / 12AB, 80G, CSR-1, accounting, taxation, ROC compliance and NGO-related advisory.",
+        "sort_order": 10,
+        "is_active": true
+      }
+    ]
+  },
+  "startup-india-registration": {
+    "service_slug": "startup-india-registration",
+    "service_name": "Startup India Registration",
+    "template_name": "Startup India Registration (DPIIT Recognition) Template",
+    "h1": "Startup India Registration (DPIIT Recognition) in {{CITY}}. Get Recognised. Unlock Opportunities. Build for Growth.",
+    "meta_title": "Startup India Registration (DPIIT Recognition) in {{CITY}} | The Corporate Hub",
+    "meta_description": "Building a startup is different from simply starting a business. Professional startup india registration (dpiit recognition) services in {{CITY}}, {{STATE}} ...",
+    "intro": "Building a startup is different from simply starting a business.\n\nIf your business is innovative, scalable or capable of creating significant employment or wealth, DPIIT Startup Recognition can formally place your business within the Government of India's Startup India ecosystem.\n\nThe real value is not just the certificate.\n\nIt is about what the recognition can help an eligible startup access:\n\nTax Benefits | Funding Ecosystem | Government Schemes | IP Benefits | Procurement Opportunities | Startup Support",
+    "what_is_service": "Startup India is a Government of India initiative supporting innovation, entrepreneurship and startup growth.\n\nEligible entities can apply for DPIIT Recognition under the Startup India framework.\n\nOnce recognised, a startup may become eligible to access various benefits and schemes, subject to the separate conditions of each benefit.\n\nImportant:\n\nDPIIT Recognition does not automatically mean tax exemption, funding or grants.\n\nEach benefit has its own eligibility and application requirements.",
+    "who_should_choose": "It can be suitable for businesses working on:\n\nInnovative products or services\n\nTechnology-driven businesses\n\nSaaS & software startups\n\nFinTech and other technology startups\n\nD2C and innovative consumer brands\n\nInnovative manufacturing\n\nDeepTech\n\nNew or improved business processes\n\nScalable service models\n\nBusinesses with strong employment-generation potential\n\nBusinesses with potential for significant wealth creation\n\nSimply registering a new company does not automatically make it an eligible startup.\n\nYour business model should satisfy the applicable DPIIT criteria.",
+    "key_benefits": "Government Recognition\n\nYour eligible business receives formal recognition as a DPIIT-recognised startup.\n\nIncome-Tax Benefit\n\nEligible recognised startups can separately apply for tax exemption under Section 80-IAC, subject to its specific conditions and approval.\n\nIntellectual Property Benefits\n\nEligible startups can access prescribed benefits and facilitation relating to patents and trademarks under applicable Startup India/IP schemes.\n\nGovernment Procurement\n\nEligible startups may access certain relaxations in public procurement, subject to applicable procurement rules and tender conditions.\n\nSelf-Certification\n\nEligible recognised startups can access self-certification benefits under specified labour and environmental laws, subject to the applicable framework.\n\nStartup Funding Ecosystem\n\nRecognition can be relevant when exploring eligible government-backed startup programmes, incubators and funding ecosystems.\n\nCredibility\n\nDPIIT recognition can strengthen how an eligible startup presents itself to:\n\nInvestors | Incubators | Institutions | Government Programmes | Startup Ecosystems",
+    "eligibility": "For Normal Startups\n\nUnder the current DPIIT framework, broadly:\n\nEligible Entity\n\nThe entity should be incorporated/registered as an eligible structure such as:\n\nPrivate Limited Company | LLP | Registered Partnership Firm | Cooperative Society\n\nAge\n\nThe entity can generally be recognised as a startup for up to:\n\n10 Years from Incorporation / Registration\n\nTurnover\n\nTurnover should remain below:\n\n₹200 Crore\n\nin any previous financial year, as prescribed under the current recognition framework.\n\nInnovation / Scalability\n\nThe business should work towards:\n\nInnovation or Improvement of Products, Processes or Services\n\nand/or have a:\n\nScalable Business Model with High Potential for Employment Generation or Wealth Creation\n\nOriginal Business\n\nThe entity should not merely be formed by splitting up or reconstructing an existing business.\n\nThese criteria reflect the Startup India portal updated in August 2026.\n\nSpecial Framework for DeepTech Startups\n\nThe 2026 framework provides extended recognition parameters for qualifying DeepTech startups:\n\nRecognition Period — Up to 20 Years\n\nTurnover Threshold — Below ₹300 Crore\n\nsubject to satisfying the applicable DeepTech definition and conditions.",
+    "documents": "Entity Documents\n\n[DOCUMENT LIST TO BE ADDED]\n\nFounder / Director / Partner Details\n\n[DOCUMENT LIST TO BE ADDED]\n\nBusiness & Innovation Details\n\n[DOCUMENT LIST TO BE ADDED]\n\nSupporting Information\n\n[DOCUMENT LIST TO BE ADDED]",
+    "process": "The process generally involves:\n\nUnderstand the Business Model\n↓\nCheck DPIIT Eligibility\n↓\nIdentify Innovation / Scalability\n↓\nPrepare Business Information\n↓\nApply through the Government Framework\n↓\nDPIIT Review / Processing\n↓\n\nDPIIT STARTUP RECOGNITION\n\nApplications are currently routed through the National Single Window System (NSWS) as specified by Startup India.",
+    "timeline": "Generally 7–15 Working Days*\n\nThe actual processing period may vary depending upon:\n\nApplication Completeness | Supporting Information | Government Processing | Clarification / Additional Information, if required\n\nThe timeline is indicative and DPIIT recognition cannot be guaranteed.",
+    "tax_compliance": "This is one of the most misunderstood parts of Startup India.\n\nStartup India Certificate ≠ Automatic Tax Exemption\n\nDPIIT recognition and income-tax exemption are separate.\n\nSection 80-IAC\n\nEligible DPIIT-recognised startups can separately apply for the prescribed income-tax exemption.\n\nThe Startup India portal states that eligible startups can claim 100% deduction of profits for 3 consecutive financial years out of the prescribed 10-year period, subject to Section 80-IAC conditions and approval.\n\nFor 80-IAC, separate eligibility conditions apply, including the type of entity and date of incorporation.\n\nTherefore:\n\nDPIIT Recognition\n↓\nCheck 80-IAC Eligibility\n↓\nSeparate Application\n↓\nApproval\n↓\nTax Benefit, if eligible",
+    "comparison": "The simplest way to understand it:\n\nStartup India Certificate = Recognition\n\n80-IAC = Separate Tax Benefit",
+    "how_it_helps": "Get Recognised\n\nMove from:\n\nNew Business → Recognised Startup\n\nand establish your startup within India's formal startup ecosystem.\n\nProtect Innovation\n\nEligible startups can explore IP facilitation and applicable benefits for protecting their innovations and brands.\n\nExplore Funding Opportunities\n\nRecognition can help an eligible startup participate in applicable:\n\nIncubators | Startup Programmes | Funding Schemes | Investor Ecosystems\n\nExplore Government Opportunities\n\nEligible startups can explore applicable procurement relaxations and government programmes.\n\nBuild Investor Readiness\n\nRecognition alone does not attract investment, but when combined with:\n\nStrong Business Model + Compliance + IP + Financials + Growth\n\nit can strengthen the overall startup profile.",
+    "local_information": "The Corporate Hub assists entrepreneurs and businesses in {{CITY}}, {{STATE}} with Startup India Registration (DPIIT Recognition).\n\nThe Corporate Hub supports startups across:\n\nAhmedabad | Gandhinagar | Surat | Vadodara | Rajkot | Gujarat | Pan India\n\nFor Gujarat-based startups, we can also evaluate whether the business may qualify for relevant state-level startup programmes or incentives, separately from DPIIT recognition.\n\nFor startups anywhere in India, our support can extend beyond the recognition certificate to:\n\nCompany Structure | Trademark | Taxation | Accounting | Funding Documentation | Compliance | Business Advisory",
+    "why_corporate_hub": "We Don't Just Ask: “Can We Get the Certificate?”\n\nWe ask:\n\n“What Can You Do After Getting It?”\n\nWe first understand your:\n\nBusiness Model\nInnovation\nScalability\nRevenue Model\nIntellectual Property\nFunding Plans\nTax Position\nFuture Growth\n\nThen we help identify the relevant journey:\n\nDPIIT Recognition → Tax Benefits → IP → Funding Readiness → Government Opportunities → Growth\n\nBecause getting recognised should be the beginning of the startup journey, not the end.",
+    "why_choose_service": "At The Corporate Hub, we assist clients in {{CITY}} with comprehensive startup india registration (dpiit recognition) and ongoing advisory.",
+    "related_services": "Startups may also need:\n\nPrivate Limited Company Registration\nLLP Registration\nTrademark Registration\nPatent / IP Advisory\nGST Registration\nAccounting & Taxation\nSection 80-IAC Advisory\nStartup Funding Support\nBusiness Valuation\nInvestor Documentation",
+    "call_to_action": "Don't get Startup India Recognition just to add another certificate to your company profile.\n\nUnderstand what your startup can actually unlock with it.\n\nAt The Corporate Hub, we help entrepreneurs move from:\n\nIdea → Entity → DPIIT Recognition → Protection → Funding Readiness → Growth\n\nGet Recognised. Build Credibility. Unlock Opportunities.\n\nTHE CORPORATE HUB\nStartup & Business Consultants | Gujarat • Pan India",
+    "pricing": "Contact our team for a transparent, customised quote based on your specific requirements.",
+    "og_image": "/logo.png",
+    "faqs": [
+      {
+        "question": "Is every new company eligible for Startup India?",
+        "answer": "No. Merely being newly incorporated is not enough. The business must satisfy the applicable DPIIT eligibility criteria, including innovation/improvement or the prescribed scalable-business criteria.",
+        "sort_order": 1,
+        "is_active": true
+      },
+      {
+        "question": "What is the current turnover limit?",
+        "answer": "Under the 2026 framework, the turnover threshold is below ₹200 crore for normal recognised startups and below ₹300 crore for qualifying DeepTech startups.",
+        "sort_order": 2,
+        "is_active": true
+      },
+      {
+        "question": "How old can a startup be?",
+        "answer": "Generally, a normal startup can remain recognised for up to 10 years, while qualifying DeepTech startups can have an extended period of up to 20 years, subject to applicable conditions.",
+        "sort_order": 3,
+        "is_active": true
+      },
+      {
+        "question": "Does Startup India give 3 years of tax exemption automatically?",
+        "answer": "No. DPIIT recognition itself does not provide automatic income-tax exemption. Eligible startups need to separately satisfy and apply under Section 80-IAC.",
+        "sort_order": 4,
+        "is_active": true
+      },
+      {
+        "question": "Does DPIIT give funding after registration?",
+        "answer": "No. DPIIT recognition does not guarantee a loan, grant or investment.",
+        "sort_order": 5,
+        "is_active": true
+      },
+      {
+        "question": "Can an LLP obtain Startup India Recognition?",
+        "answer": "Yes, an eligible LLP can apply for DPIIT recognition.",
+        "sort_order": 6,
+        "is_active": true
+      },
+      {
+        "question": "Can a proprietorship obtain DPIIT Startup Recognition?",
+        "answer": "A sole proprietorship is not included among the eligible entity structures listed under the current DPIIT recognition criteria.",
+        "sort_order": 7,
+        "is_active": true
+      },
+      {
+        "question": "Is Startup India useful for an existing business?",
+        "answer": "Potentially yes, provided the entity remains within the prescribed age, turnover and other eligibility criteria and satisfies the innovation/scalability requirements.",
+        "sort_order": 8,
+        "is_active": true
+      },
+      {
+        "question": "Is Startup India registration available across India?",
+        "answer": "Yes. DPIIT Startup Recognition is a Central Government framework and is not restricted to Gujarat.",
+        "sort_order": 9,
+        "is_active": true
+      },
+      {
+        "question": "Is the DPIIT certificate itself chargeable by the Government?",
+        "answer": "The Startup India portal states that the Ministry does not charge a fee for DPIIT Certificate of Recognition or Certificate of Eligibility. Professional advisory/support charges, where separately engaged, are different from a government recognition fee.",
+        "sort_order": 10,
+        "is_active": true
+      }
+    ]
+  }
+};
+
+/**
+ * Replaces {{CITY}} and {{STATE}} in text.
+ */
+export function replacePlaceholders(text, cityName, stateName) {
+  if (typeof text !== 'string') return text || '';
+  return text
+    .replace(/\{\{CITY\}\}/g, cityName || '')
+    .replace(/\{\{STATE\}\}/g, stateName || '');
+}
+
+/**
+ * Applies placeholders to an entire template object (from DB or local file).
+ */
+export function applyTemplatePlaceholders(template, cityName, stateName) {
+  if (!template) return null;
+  const result = {};
+  for (const [key, value] of Object.entries(template)) {
+    if (key === 'faqs' && Array.isArray(value)) {
+      result.faqs = value.map(faq => ({
+        ...faq,
+        question: replacePlaceholders(faq.question, cityName, stateName),
+        answer: replacePlaceholders(faq.answer, cityName, stateName)
+      }));
+    } else if (typeof value === 'string') {
+      result[key] = replacePlaceholders(value, cityName, stateName);
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
+}
+
+/**
+ * Applies a service template for the given city/state from local definitions.
+ */
+export function getServiceTemplate(serviceSlug, cityName, stateName) {
+  const template = seoServiceTemplates[serviceSlug];
+  if (!template) return null;
+  return applyTemplatePlaceholders(template, cityName, stateName);
+}
