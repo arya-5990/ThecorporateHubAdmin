@@ -5,7 +5,8 @@ import {
   FiFileText,
   FiMapPin,
   FiGlobe,
-  FiRefreshCw
+  FiRefreshCw,
+  FiLayers
 } from 'react-icons/fi';
 
 import SeoDashboard from './seo/SeoDashboard';
@@ -15,7 +16,9 @@ import CreatePageModal from './seo/CreatePageModal';
 import DuplicatePageModal from './seo/DuplicatePageModal';
 import SeoLocationsList from './seo/SeoLocationsList';
 import SeoServicesList from './seo/SeoServicesList';
+import SeoTemplatesList from './seo/SeoTemplatesList';
 import ConfirmModal from './ConfirmModal';
+import { seoServiceTemplates } from './data/seoServiceTemplates';
 
 const INITIAL_LOCATIONS = [
   { id: 'loc-1', city_name: 'Ahmedabad', state_name: 'Gujarat', city_slug: 'ahmedabad', state_slug: 'gujarat', is_active: true },
@@ -36,8 +39,18 @@ const INITIAL_SERVICES = [
   { id: 'srv-1', service_name: 'Company Registration', service_slug: 'company-registration', parent_service: 'business-registration', is_active: true },
   { id: 'srv-2', service_name: 'Trademark Registration', service_slug: 'trademark-registration', parent_service: 'intellectual-property', is_active: true },
   { id: 'srv-3', service_name: 'GST Compliance', service_slug: 'gst-compliance', parent_service: 'accounting-taxation', is_active: true },
-  { id: 'srv-4', service_name: 'Copyright Registration', service_slug: 'copyright-registration', parent_service: 'intellectual-property', is_active: true }
+  { id: 'srv-4', service_name: 'Copyright Registration', service_slug: 'copyright-registration', parent_service: 'intellectual-property', is_active: true },
+  { id: 'srv-5', service_name: 'Trust Registration & 12AA/80G', service_slug: 'trust-12aa-80g', parent_service: 'business-registration', is_active: true },
+  { id: 'srv-6', service_name: 'LLP Registration', service_slug: 'llp', parent_service: 'business-registration', is_active: true },
+  { id: 'srv-7', service_name: 'One Person Company Registration', service_slug: 'opc', parent_service: 'business-registration', is_active: true },
+  { id: 'srv-8', service_name: 'Section 8 Company Registration', service_slug: 'section-8-company', parent_service: 'business-registration', is_active: true },
+  { id: 'srv-9', service_name: 'Startup India Registration', service_slug: 'startup-india-registration', parent_service: 'business-registration', is_active: true }
 ];
+
+const INITIAL_TEMPLATES = Object.values(seoServiceTemplates).map((t) => ({
+  id: `seed-${t.service_slug}`,
+  ...t
+}));
 
 const INITIAL_PAGES = [
   {
@@ -103,6 +116,7 @@ export default function SeoManager({ triggerToast }) {
   const [locations, setLocations] = useState(INITIAL_LOCATIONS);
   const [services, setServices] = useState(INITIAL_SERVICES);
   const [pages, setPages] = useState(INITIAL_PAGES);
+  const [templates, setTemplates] = useState(INITIAL_TEMPLATES);
   const [loading, setLoading] = useState(false);
 
   const [activeEditingPage, setActiveEditingPage] = useState(null);
@@ -123,6 +137,21 @@ export default function SeoManager({ triggerToast }) {
 
         const { data: srvs } = await supabase.from('seo_services').select('*').order('service_name');
         if (srvs && srvs.length > 0) setServices(srvs);
+
+        // Fetch master templates from Supabase
+        try {
+          const { data: tmpls } = await supabase.from('seo_service_templates').select('*, seo_services(*)');
+          if (tmpls && tmpls.length > 0) {
+            const mappedTmpls = tmpls.map((t) => ({
+              ...t,
+              service_name: t.seo_services?.service_name || t.service_name || t.template_name,
+              service_slug: t.seo_services?.service_slug || t.service_slug
+            }));
+            setTemplates(mappedTmpls);
+          }
+        } catch (tErr) {
+          console.warn("Using local templates fallback:", tErr);
+        }
 
         const { data: pgs } = await supabase.from('seo_location_pages').select('*, seo_locations(*), seo_services(*), seo_faqs(*)').order('updated_at', { ascending: false });
         if (pgs && pgs.length > 0) {
@@ -184,7 +213,28 @@ export default function SeoManager({ triggerToast }) {
 
         if (error) throw error;
         if (data) createdRecord = data;
+
+        // Insert template FAQs if provided
+        if (newPageData.faqs && newPageData.faqs.length > 0 && createdRecord.id) {
+          const faqRows = newPageData.faqs.map((f, i) => ({
+            page_id: createdRecord.id,
+            question: f.question,
+            answer: f.answer,
+            sort_order: f.sort_order ?? i + 1,
+            is_active: f.is_active ?? true
+          }));
+          const { error: faqError } = await supabase.from('seo_faqs').insert(faqRows);
+          if (faqError) console.error('Template FAQ insert error:', faqError);
+        }
       }
+
+      // Attach FAQs to local record so editor shows them immediately
+      createdRecord.faqs = newPageData.faqs || [];
+      createdRecord.city_name = newPageData.location.city_name;
+      createdRecord.state_name = newPageData.location.state_name;
+      createdRecord.city_slug = newPageData.location.city_slug;
+      createdRecord.service_name = newPageData.service.service_name;
+      createdRecord.service_slug = newPageData.service.service_slug;
 
       setPages([createdRecord, ...pages]);
       setShowCreateModal(false);
@@ -552,6 +602,54 @@ export default function SeoManager({ triggerToast }) {
     });
   };
 
+  const handleSaveTemplate = async (updatedTemplate) => {
+    try {
+      if (import.meta.env.VITE_SUPABASE_URL && updatedTemplate.id && !updatedTemplate.id.startsWith('seed-')) {
+        const { error } = await supabase
+          .from('seo_service_templates')
+          .update({
+            template_name: updatedTemplate.template_name,
+            h1: updatedTemplate.h1,
+            meta_title: updatedTemplate.meta_title,
+            meta_description: updatedTemplate.meta_description,
+            intro: updatedTemplate.intro,
+            what_is_service: updatedTemplate.what_is_service,
+            who_should_choose: updatedTemplate.who_should_choose,
+            key_benefits: updatedTemplate.key_benefits,
+            eligibility: updatedTemplate.eligibility,
+            documents: updatedTemplate.documents,
+            process: updatedTemplate.process,
+            timeline: updatedTemplate.timeline,
+            tax_compliance: updatedTemplate.tax_compliance,
+            comparison: updatedTemplate.comparison,
+            how_it_helps: updatedTemplate.how_it_helps,
+            local_information: updatedTemplate.local_information,
+            why_corporate_hub: updatedTemplate.why_corporate_hub,
+            why_choose_service: updatedTemplate.why_choose_service,
+            related_services: updatedTemplate.related_services,
+            call_to_action: updatedTemplate.call_to_action,
+            pricing: updatedTemplate.pricing,
+            og_image: updatedTemplate.og_image,
+            faqs: updatedTemplate.faqs,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', updatedTemplate.id);
+
+        if (error) throw error;
+      }
+
+      setTemplates((prev) =>
+        prev.map((t) =>
+          t.id === updatedTemplate.id || t.service_slug === updatedTemplate.service_slug ? updatedTemplate : t
+        )
+      );
+      triggerToast(`Template "${updatedTemplate.template_name}" saved successfully!`);
+    } catch (err) {
+      console.error("Error saving template:", err);
+      triggerToast(err.message || "Failed to save template.", "error");
+    }
+  };
+
   const publishedCount = pages.filter((p) => p.published).length;
   const draftCount = pages.filter((p) => !p.published).length;
   const stats = {
@@ -559,7 +657,8 @@ export default function SeoManager({ triggerToast }) {
     published: publishedCount,
     drafts: draftCount,
     locations: locations.length,
-    services: services.length
+    services: services.length,
+    templates: templates.length
   };
 
   return (
@@ -646,6 +745,26 @@ export default function SeoManager({ triggerToast }) {
           >
             <FiGlobe /> Services ({services.length})
           </button>
+
+          <button
+            style={{
+              background: subTab === 'templates' ? '#ff6000' : 'transparent',
+              color: subTab === 'templates' ? '#ffffff' : '#64748b',
+              border: 'none',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              fontWeight: 600,
+              fontSize: '0.88rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s ease'
+            }}
+            onClick={() => setSubTab('templates')}
+          >
+            <FiLayers /> Templates ({templates.length})
+          </button>
         </div>
 
         <button
@@ -714,11 +833,21 @@ export default function SeoManager({ triggerToast }) {
         />
       )}
 
+      {subTab === 'templates' && (
+        <SeoTemplatesList
+          templates={templates}
+          services={services}
+          onSaveTemplate={handleSaveTemplate}
+          triggerToast={triggerToast}
+        />
+      )}
+
       {showCreateModal && (
         <CreatePageModal
           locations={locations}
           services={services}
           existingPages={pages}
+          templates={templates}
           onClose={() => setShowCreateModal(false)}
           onCreate={handleCreatePageSubmit}
         />

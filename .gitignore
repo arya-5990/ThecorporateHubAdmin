@@ -25,3 +25,6 @@ dist-ssr
 *.sw?
 
 .env.local
+
+content
+corporate_hub_target_cities.pdf
