@@ -30,7 +30,8 @@ import {
   FiCalendar,
   FiHash,
   FiSave,
-  FiLogOut
+  FiLogOut,
+  FiCompass
 } from 'react-icons/fi';
 
 // Fallback Initial Mock Contacts if database is empty/offline
@@ -425,6 +426,13 @@ export default function App() {
             onClick={() => setActiveTab('seo')}
           >
             <FiGlobe /> SEO Management
+          </button>
+
+          <button
+            className={`nav-btn ${activeTab === 'sitemap' ? 'active' : ''}`}
+            onClick={() => setActiveTab('sitemap')}
+          >
+            <FiCompass /> Dynamic Sitemap
           </button>
         </nav>
 
@@ -974,6 +982,11 @@ export default function App() {
         {/* TAB 4: LOCATION x SERVICE SEO MANAGER */}
         {activeTab === 'seo' && (
           <SeoManager triggerToast={triggerToast} />
+        )}
+
+        {/* TAB 5: DYNAMIC SITEMAP MANAGER */}
+        {activeTab === 'sitemap' && (
+          <SeoManager triggerToast={triggerToast} initialSubTab="sitemap" />
         )}
 
         {/* Submission Details Modal */}

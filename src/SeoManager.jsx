@@ -5,7 +5,8 @@ import {
   FiFileText,
   FiMapPin,
   FiGlobe,
-  FiRefreshCw
+  FiRefreshCw,
+  FiCompass
 } from 'react-icons/fi';
 
 import SeoDashboard from './seo/SeoDashboard';
@@ -15,6 +16,8 @@ import CreatePageModal from './seo/CreatePageModal';
 import DuplicatePageModal from './seo/DuplicatePageModal';
 import SeoLocationsList from './seo/SeoLocationsList';
 import SeoServicesList from './seo/SeoServicesList';
+import SeoSitemapView from './seo/SeoSitemapView';
+import { syncSitemapToDb } from './seo/sitemapSync';
 import ConfirmModal from './ConfirmModal';
 
 const INITIAL_LOCATIONS = [
@@ -98,8 +101,8 @@ const INITIAL_PAGES = [
   }
 ];
 
-export default function SeoManager({ triggerToast }) {
-  const [subTab, setSubTab] = useState('overview');
+export default function SeoManager({ triggerToast, initialSubTab = 'overview' }) {
+  const [subTab, setSubTab] = useState(initialSubTab);
   const [locations, setLocations] = useState(INITIAL_LOCATIONS);
   const [services, setServices] = useState(INITIAL_SERVICES);
   const [pages, setPages] = useState(INITIAL_PAGES);
@@ -109,6 +112,23 @@ export default function SeoManager({ triggerToast }) {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDuplicateModal, setShowDuplicateModal] = useState(null);
   const [confirmModal, setConfirmModal] = useState({ isOpen: false, title: '', message: '', confirmText: 'Delete', type: 'danger', onConfirm: null });
+
+  useEffect(() => {
+    if (initialSubTab) {
+      setSubTab(initialSubTab);
+    }
+  }, [initialSubTab]);
+
+  const triggerAutoSitemapSync = async () => {
+    try {
+      const res = await syncSitemapToDb();
+      if (res.success) {
+        console.log(`[Auto-Sitemap] Synced ${res.count} URLs to database.`);
+      }
+    } catch (err) {
+      console.warn('[Auto-Sitemap] Background sync note:', err);
+    }
+  };
 
   useEffect(() => {
     fetchSeoData();
@@ -191,6 +211,7 @@ export default function SeoManager({ triggerToast }) {
       triggerToast(`Draft page created for ${newPageData.location.city_name} × ${newPageData.service.service_name}`);
       setActiveEditingPage(createdRecord);
       setSubTab('editor');
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error creating SEO page:", err);
       triggerToast(err.message || "Failed to create SEO page.", "error");
@@ -254,6 +275,7 @@ export default function SeoManager({ triggerToast }) {
       triggerToast(`Duplicated draft page created for ${dupData.location.city_name}. Content review required.`);
       setActiveEditingPage(duplicatedRecord);
       setSubTab('editor');
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error duplicating SEO page:", err);
       triggerToast(err.message || "Failed to duplicate SEO page.", "error");
@@ -313,6 +335,9 @@ export default function SeoManager({ triggerToast }) {
       const nextPages = pages.map((p) => (p.id === updatedPage.id ? { ...p, ...updatedPage, updated_at: new Date().toISOString() } : p));
       setPages(nextPages);
       triggerToast(`Draft saved for ${updatedPage.city_name || 'page'}.`);
+      if (updatedPage.published) {
+        triggerAutoSitemapSync();
+      }
     } catch (err) {
       console.error("Error saving page:", err);
       triggerToast("Failed to save draft.", "error");
@@ -373,6 +398,7 @@ export default function SeoManager({ triggerToast }) {
       setPages(nextPages);
       triggerToast(`Page published live for ${updatedPage.city_name || 'location'}!`);
       setSubTab('pages');
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error publishing page:", err);
       triggerToast("Failed to publish page.", "error");
@@ -393,6 +419,7 @@ export default function SeoManager({ triggerToast }) {
       setPages(nextPages);
       triggerToast("Page unpublished. Removed from live sitemap.");
       setSubTab('pages');
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error unpublishing page:", err);
       triggerToast("Failed to unpublish page.", "error");
@@ -418,6 +445,7 @@ export default function SeoManager({ triggerToast }) {
           }
           setPages(pages.filter((p) => p.id !== pageToDelete.id));
           triggerToast("SEO page deleted successfully.", "info");
+          triggerAutoSitemapSync();
         } catch (err) {
           console.error("Error deleting page:", err);
           triggerToast("Failed to delete SEO page.", "error");
@@ -440,6 +468,7 @@ export default function SeoManager({ triggerToast }) {
 
       setLocations(locations.map((loc) => (loc.id === locToToggle.id || loc.city_slug === locToToggle.city_slug ? { ...loc, is_active: nextActive } : loc)));
       triggerToast(`Location ${locToToggle.city_name} ${nextActive ? 'activated' : 'deactivated'}.`);
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error toggling location status:", err);
       triggerToast("Failed to update location status.", "error");
@@ -460,6 +489,7 @@ export default function SeoManager({ triggerToast }) {
 
       setServices(services.map((srv) => (srv.id === srvToToggle.id || srv.service_slug === srvToToggle.service_slug ? { ...srv, is_active: nextActive } : srv)));
       triggerToast(`Service ${srvToToggle.service_name} ${nextActive ? 'activated' : 'deactivated'}.`);
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error toggling service status:", err);
       triggerToast("Failed to update service status.", "error");
@@ -485,6 +515,7 @@ export default function SeoManager({ triggerToast }) {
           }
           setLocations(locations.filter((l) => l.id !== locToDelete.id && l.city_slug !== locToDelete.city_slug));
           triggerToast(`Location ${locToDelete.city_name} deleted successfully.`, 'info');
+          triggerAutoSitemapSync();
         } catch (err) {
           console.error("Error deleting location:", err);
           triggerToast(err.message || "Failed to delete location.", "error");
@@ -503,6 +534,7 @@ export default function SeoManager({ triggerToast }) {
       }
       setLocations([...locations, created]);
       triggerToast(`City ${newLocData.city_name} added successfully!`);
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error creating location:", err);
       triggerToast("Failed to add location.", "error");
@@ -519,6 +551,7 @@ export default function SeoManager({ triggerToast }) {
       }
       setServices([...services, created]);
       triggerToast(`Service ${newSrvData.service_name} added successfully!`);
+      triggerAutoSitemapSync();
     } catch (err) {
       console.error("Error creating service:", err);
       triggerToast("Failed to add service.", "error");
@@ -544,6 +577,7 @@ export default function SeoManager({ triggerToast }) {
           }
           setServices(services.filter((s) => s.id !== srvToDelete.id && s.service_slug !== srvToDelete.service_slug));
           triggerToast(`Service "${srvToDelete.service_name}" deleted successfully.`, 'info');
+          triggerAutoSitemapSync();
         } catch (err) {
           console.error("Error deleting service:", err);
           triggerToast(err.message || "Failed to delete service.", "error");
@@ -646,6 +680,26 @@ export default function SeoManager({ triggerToast }) {
           >
             <FiGlobe /> Services ({services.length})
           </button>
+
+          <button
+            style={{
+              background: subTab === 'sitemap' ? '#ff6000' : 'transparent',
+              color: subTab === 'sitemap' ? '#ffffff' : '#64748b',
+              border: 'none',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              fontWeight: 600,
+              fontSize: '0.88rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s ease'
+            }}
+            onClick={() => setSubTab('sitemap')}
+          >
+            <FiCompass /> Dynamic Sitemap
+          </button>
         </div>
 
         <button
@@ -712,6 +766,10 @@ export default function SeoManager({ triggerToast }) {
           onCreateService={handleCreateService}
           onDeleteService={handleDeleteService}
         />
+      )}
+
+      {subTab === 'sitemap' && (
+        <SeoSitemapView triggerToast={triggerToast} />
       )}
 
       {showCreateModal && (
