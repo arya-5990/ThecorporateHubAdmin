@@ -5,6 +5,7 @@ import { supabase } from './supabase';
 import LoginPage from './LoginPage';
 import SeoManager from './SeoManager';
 import ConfirmModal from './ConfirmModal';
+import EmployeeManager from './employees/EmployeeManager';
 import {
   FiGrid,
   FiInbox,
@@ -31,7 +32,8 @@ import {
   FiHash,
   FiSave,
   FiLogOut,
-  FiCompass
+  FiCompass,
+  FiBriefcase
 } from 'react-icons/fi';
 
 // Fallback Initial Mock Contacts if database is empty/offline
@@ -434,6 +436,12 @@ export default function App() {
           >
             <FiCompass /> Dynamic Sitemap
           </button>
+                    <button
+            className={`nav-btn ${activeTab === 'employees' ? 'active' : ''}`}
+            onClick={() => setActiveTab('employees')}
+          >
+            <FiBriefcase /> Modify Employee
+          </button>
         </nav>
 
         <div className="sidebar-footer">
@@ -467,12 +475,14 @@ export default function App() {
               {activeTab === 'contacts' && 'Incoming Contact Inquiries'}
               {activeTab === 'users' && 'Registered Users'}
               {activeTab === 'seo' && 'Location × Service SEO Manager'}
+                              {activeTab === 'employees' && 'Modify Employee'}
             </h1>
             <p className="page-subtitle">
               {activeTab === 'dashboard' && 'Monitor real-time client inquiries and service accordion configurations'}
               {activeTab === 'contacts' && 'Watch and manage incoming customer messages submitted from the contact page'}
               {activeTab === 'users' && 'View and manage all users registered on The Corporate Hub platform'}
               {activeTab === 'seo' && 'Manage target cities, service taxonomies, metadata and publishing status for /locations/[city]/[service]'}
+                            {activeTab === 'employees' && 'Add, edit and remove the team members shown on the main website'}
             </p>
           </div>
 
@@ -987,6 +997,11 @@ export default function App() {
         {/* TAB 5: DYNAMIC SITEMAP MANAGER */}
         {activeTab === 'sitemap' && (
           <SeoManager triggerToast={triggerToast} initialSubTab="sitemap" />
+        )}
+
+                  {/* TAB 6: EMPLOYEES */}
+        {activeTab === 'employees' && (
+          <EmployeeManager triggerToast={triggerToast} />
         )}
 
         {/* Submission Details Modal */}
