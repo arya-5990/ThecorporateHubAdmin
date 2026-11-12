@@ -140,3 +140,39 @@ CREATE TABLE public.seo_service_templates (
   CONSTRAINT seo_service_templates_pkey PRIMARY KEY (id),
   CONSTRAINT seo_service_templates_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.seo_services(id)
 );
+
+-- Employees ("Our Team" cards). Setup + RLS + seed: employees_setup.sql
+-- Photos are stored in Cloudinary; image_public_id is the Cloudinary public_id.
+CREATE TABLE public.employees (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  designation text NOT NULL,
+  experience text NOT NULL DEFAULT ''::text,
+  description text NOT NULL DEFAULT ''::text,
+  responsibilities text[] NOT NULL DEFAULT '{}'::text[],
+  image_url text NOT NULL DEFAULT ''::text,
+  image_public_id text,
+  sort_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT employees_pkey PRIMARY KEY (id)
+);
+
+-- Employees ("Our Team" cards). Setup + RLS + seed: employees_setup.sql
+-- Photos are stored in Cloudinary; image_public_id is the Cloudinary public_id.
+CREATE TABLE public.employees (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  designation text NOT NULL,
+  experience text NOT NULL DEFAULT ''::text,
+  description text NOT NULL DEFAULT ''::text,
+  responsibilities text[] NOT NULL DEFAULT '{}'::text[],
+  image_url text NOT NULL DEFAULT ''::text,
+  image_public_id text,
+  sort_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT employees_pkey PRIMARY KEY (id)
+);

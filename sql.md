@@ -139,3 +139,30 @@ CREATE POLICY "Anyone can update seo_sitemaps"
   FOR UPDATE
   USING (true);
 
+
+-- ==============================================================================
+-- EMPLOYEES ("Our Team" cards)
+-- Full setup script (table, trigger, RLS, seed): employees_setup.sql
+-- Photos live in Cloudinary, uploaded via the cloudinary-sign Edge Function.
+-- ==============================================================================
+
+CREATE TABLE IF NOT EXISTS public.employees (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  designation text NOT NULL,
+  experience text NOT NULL DEFAULT '',
+  description text NOT NULL DEFAULT '',
+  responsibilities text[] NOT NULL DEFAULT '{}',
+  image_url text NOT NULL DEFAULT '',
+  image_public_id text,                      -- Cloudinary public_id
+  sort_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT employees_pkey PRIMARY KEY (id)
+);
+
+-- RLS: public can read active rows; only app_metadata.role = 'admin' can write
+--   "Public read active employees"  FOR SELECT TO anon, authenticated USING (is_active = true)
+--   "Admins manage employees"       FOR ALL TO authenticated
+--                                   USING / WITH CHECK ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
